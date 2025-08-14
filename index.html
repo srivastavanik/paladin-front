@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paladin - Autonomous Security Testing</title>
-    <link rel="icon" type="image/png" href="./upscaled-image.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./upscaled-image.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./upscaled-image.png">
     <link rel="shortcut icon" type="image/png" href="./upscaled-image.png">
-    <link rel="apple-touch-icon" href="./upscaled-image.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./upscaled-image.png">
     <meta name="description" content="Repo-resident agents that execute full-stack penetration tests and ship reproducible fixes. Find critical vulnerabilities before users do.">
     
     <!-- Preconnect to font sources -->
@@ -1364,94 +1365,247 @@
         
         /* Investment Form Section */
         .investment-section {
-            background-color: var(--color-white);
+            background: linear-gradient(180deg, 
+                var(--color-white) 0%, 
+                var(--color-gray-50) 25%, 
+                var(--color-gray-100) 50%, 
+                var(--color-gray-200) 75%, 
+                var(--color-gray-300) 100%);
             padding: var(--space-128) 0;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .investment-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--color-gray-400) 20%,
+                var(--color-gray-400) 80%,
+                transparent 100%
+            );
+        }
+        
+        .investment-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--color-gray-400) 20%,
+                var(--color-gray-400) 80%,
+                transparent 100%
+            );
         }
         
         .investment-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            text-align: center;
+            position: relative;
+            z-index: 2;
         }
         
         .investment-header {
-            margin-bottom: var(--space-64);
+            text-align: center;
+            margin-bottom: var(--space-96);
+            padding: var(--space-64) 0;
         }
         
         .investment-header h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
             color: var(--color-black);
             margin-bottom: var(--space-32);
+            font-weight: 400;
+            letter-spacing: -0.02em;
         }
         
         .investment-intro {
             color: var(--color-gray-700);
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             line-height: 1.6;
-            text-align: left;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
         }
         
         .investment-form {
-            background-color: var(--color-white);
-            padding: var(--space-48);
-            border: 1px solid var(--color-gray-200);
-            border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            background: transparent;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
         }
         
-        .form-group {
-            margin-bottom: var(--space-32);
-            text-align: left;
+        .form-field {
+            margin-bottom: var(--space-64);
+            position: relative;
+            padding: var(--space-48) 0;
         }
         
-        .form-group label {
-            display: block;
-            margin-bottom: var(--space-8);
+        .form-field::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 0, 0, 0.1) 20%,
+                rgba(0, 0, 0, 0.1) 80%,
+                transparent 100%
+            );
+        }
+        
+        .form-field:last-of-type::after {
+            display: none;
+        }
+        
+        .field-number {
+            font-size: 1rem;
+            color: var(--color-gray-600);
+            font-weight: 300;
+            margin-bottom: var(--space-16);
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
+        }
+        
+        .field-question {
+            font-size: 1.5rem;
             color: var(--color-black);
-            font-weight: 500;
-            font-size: 0.875rem;
+            margin-bottom: var(--space-24);
+            font-weight: 400;
+            line-height: 1.3;
         }
         
         .required {
             color: #dc2626;
-            margin-left: 2px;
+            margin-left: 4px;
         }
         
-        .form-group input {
+        .field-input {
             width: 100%;
-            padding: var(--space-16);
-            border: 1px solid var(--color-gray-300);
-            border-radius: 4px;
-            font-size: 1rem;
+            background: var(--color-white);
+            border: none;
+            border-bottom: 2px solid var(--color-gray-200);
+            padding: var(--space-16) 0;
+            font-size: 1.125rem;
             color: var(--color-black);
-            background-color: var(--color-white);
-            transition: border-color var(--transition-fast);
+            font-family: var(--font-sans);
+            transition: all var(--transition-fast);
+            outline: none;
         }
         
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--color-black);
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        .field-input::placeholder {
+            color: var(--color-gray-400);
+            font-style: italic;
+        }
+        
+        .field-input:focus {
+            border-bottom-color: var(--color-black);
+            background: var(--color-white);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .submit-section {
+            text-align: center;
+            padding: var(--space-64) 0;
+            margin-top: var(--space-48);
         }
         
         .btn-investment-form {
             background-color: var(--color-black);
             color: var(--color-white);
-            border: 1px solid var(--color-black);
-            padding: var(--space-16) var(--space-48);
-            font-size: 1rem;
-            font-weight: 500;
-            border-radius: 4px;
+            border: none;
+            padding: var(--space-24) var(--space-64);
+            font-size: 1.125rem;
+            font-weight: 400;
+            font-family: var(--font-sans);
             cursor: pointer;
-            transition: all var(--transition-fast);
-            margin-top: var(--space-24);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.01em;
+        }
+        
+        .btn-investment-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .btn-investment-form:hover::before {
+            left: 100%;
         }
         
         .btn-investment-form:hover {
             background-color: var(--color-gray-800);
-            border-color: var(--color-gray-800);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-investment-form:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-investment-form:disabled:hover {
+            background-color: var(--color-black);
+        }
+        
+        /* Investment Form Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .investment-section {
+                padding: var(--space-64) 0;
+            }
+            
+            .investment-header {
+                padding: var(--space-32) 0;
+                margin-bottom: var(--space-64);
+            }
+            
+            .investment-header h2 {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+            
+            .investment-intro {
+                font-size: 1.125rem;
+                padding: 0 var(--space-16);
+            }
+            
+            .form-field {
+                padding: var(--space-32) var(--space-16);
+                margin-bottom: var(--space-48);
+            }
+            
+            .field-question {
+                font-size: 1.25rem;
+            }
+            
+            .field-input {
+                font-size: 1rem;
+            }
+            
+            .btn-investment-form {
+                padding: var(--space-20) var(--space-48);
+                font-size: 1rem;
+            }
         }
         
         /* Thank You Section */
@@ -2077,34 +2231,41 @@
                     </div>
                     
                     <form id="investment-form" class="investment-form">
-                        <div class="form-group">
-                            <label for="name">Name <span class="required">*</span></label>
-                            <input type="text" id="name" name="name" required>
+                        <div class="form-field">
+                            <div class="field-number">1→</div>
+                            <div class="field-question">What is your name?<span class="required">*</span></div>
+                            <input type="text" id="name" name="name" class="field-input" placeholder="Type your answer here..." required>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="title">Title <span class="required">*</span></label>
-                            <input type="text" id="title" name="title" required>
+                        <div class="form-field">
+                            <div class="field-number">2→</div>
+                            <div class="field-question">What is your title?<span class="required">*</span></div>
+                            <input type="text" id="title" name="title" class="field-input" placeholder="Type your answer here..." required>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="company">Company <span class="required">*</span></label>
-                            <input type="text" id="company" name="company" required>
+                        <div class="form-field">
+                            <div class="field-number">3→</div>
+                            <div class="field-question">What company do you represent?<span class="required">*</span></div>
+                            <input type="text" id="company" name="company" class="field-input" placeholder="Type your answer here..." required>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="email">Email <span class="required">*</span></label>
-                            <input type="email" id="email" name="email" required>
+                        <div class="form-field">
+                            <div class="field-number">4→</div>
+                            <div class="field-question">What is your email address?<span class="required">*</span></div>
+                            <input type="email" id="email" name="email" class="field-input" placeholder="Type your answer here..." required>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
+                        <div class="form-field">
+                            <div class="field-number">5→</div>
+                            <div class="field-question">What is your phone number? <span style="color: var(--color-gray-500); font-size: 1rem;">(optional)</span></div>
+                            <input type="tel" id="phone" name="phone" class="field-input" placeholder="Type your answer here...">
                         </div>
                         
-                        <button type="submit" class="btn btn-investment-form">
-                            <span>Submit Interest</span>
-                        </button>
+                        <div class="submit-section">
+                            <button type="submit" class="btn-investment-form">
+                                <span>Submit Interest</span>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
