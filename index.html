@@ -239,7 +239,7 @@
         }
         
         .nav-links a {
-            color: var(--color-gray-300);
+            color: var(--color-gray-800);
             font-weight: 400;
             padding: var(--space-8) var(--space-16);
             text-decoration: none;
@@ -260,7 +260,7 @@
         }
         
         .nav-links a:hover {
-            color: var(--color-white);
+            color: var(--color-black);
         }
         
         .nav-links a:hover::after {
@@ -2029,12 +2029,34 @@
             color: var(--color-white);
         }
         
+        .member-header {
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .member-header:hover {
+            transform: translateX(5px);
+        }
+        
         .member-info h2 {
             font-size: clamp(2.5rem, 6vw, 4rem);
             margin-bottom: var(--space-16);
             font-weight: 400;
             letter-spacing: -0.02em;
             font-family: var(--font-sans);
+            display: flex;
+            align-items: center;
+            gap: var(--space-16);
+        }
+        
+        .expand-arrow {
+            font-size: 2rem;
+            transition: transform var(--transition-base);
+            display: inline-block;
+        }
+        
+        .expand-arrow.expanded {
+            transform: rotate(90deg);
         }
         
         .member-info h3 {
@@ -2048,7 +2070,15 @@
         .credentials {
             margin-bottom: var(--space-48);
             opacity: 0;
-            animation: fadeInUp 1s ease-out 0.5s forwards;
+            max-height: 0;
+            overflow: hidden;
+            transition: all var(--transition-slow);
+        }
+        
+        .credentials.expanded {
+            opacity: 1;
+            max-height: 1000px;
+            animation: fadeInUp 1s ease-out forwards;
         }
         
         .credentials .education {
@@ -2107,8 +2137,6 @@
         .social-links {
             display: flex;
             gap: var(--space-16);
-            opacity: 0;
-            animation: popIn 0.8s ease-out 1.5s forwards;
         }
         
         .btn-social {
@@ -2151,8 +2179,7 @@
         }
         
         .contact-details {
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 2s forwards;
+            margin-top: var(--space-16);
         }
         
         .contact-details p {
@@ -2840,50 +2867,54 @@
                                 <img src="./GPT5-251.jpg" alt="Nick S." />
                             </div>
                             <div class="member-info">
-                                <h2>Nick S.</h2>
-                                <h3>Co-Founder & CEO</h3>
-                                <div class="credentials typing-animation">
+                                <div class="member-header" onclick="toggleCredentials('nick')">
+                                    <h2>Nick S. <span class="expand-arrow" id="nick-arrow">→</span></h2>
+                                    <h3>Co-Founder & CEO</h3>
+                                </div>
+                                <div class="credentials typing-animation" id="nick-credentials" style="display: none;">
                                     <p class="education">University of California, Berkeley | CS, DS, Economics</p>
                                     <p class="experience">Technical Researcher @ Mercor<br>Researcher @ Berkeley Artificial Intelligence Research Lab</p>
-                                </div>
-                                <div class="contact-info">
-                                    <div class="social-links">
-                                        <a href="https://www.linkedin.com/in/srivastavan/" class="btn btn-social linkedin" target="_blank">LinkedIn</a>
-                                        <a href="https://x.com/nick_sriv" class="btn btn-social twitter" target="_blank">X</a>
-                                    </div>
-                                    <div class="contact-details">
-                                        <p>srivastavan@berkeley.edu</p>
-                                        <p>+1 (908) 739-5885</p>
+                                    <div class="contact-info">
+                                        <div class="social-links">
+                                            <a href="https://www.linkedin.com/in/srivastavan/" class="btn btn-social linkedin" target="_blank">LinkedIn</a>
+                                            <a href="https://x.com/nick_sriv" class="btn btn-social twitter" target="_blank">X</a>
+                                        </div>
+                                        <div class="contact-details">
+                                            <p>srivastavan@berkeley.edu</p>
+                                            <p>+1 (908) 739-5885</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
+                </div>
+                
                         <!-- Jackson B. - Bottom Left Info, Bottom Right Image -->
                         <div class="team-member jackson">
                             <div class="member-info">
-                                <h2>Jackson B.</h2>
-                                <h3>Co-Founder & CTO</h3>
-                                <div class="credentials typing-animation">
+                                <div class="member-header" onclick="toggleCredentials('jackson')">
+                                    <h2>Jackson B. <span class="expand-arrow" id="jackson-arrow">→</span></h2>
+                                    <h3>Co-Founder & CTO</h3>
+                                </div>
+                                <div class="credentials typing-animation" id="jackson-credentials" style="display: none;">
                                     <p class="education">Georgia Tech | Computer Science</p>
                                     <p class="experience">Software Engineering @ Roblox<br>Software Engineering @ Fidelity Investments</p>
-                                </div>
-                                <div class="contact-info">
-                                    <div class="social-links">
-                                        <a href="https://www.linkedin.com/in/jacksonbelanger/" class="btn btn-social linkedin" target="_blank">LinkedIn</a>
-                                        <a href="https://x.com/jacksonbelang" class="btn btn-social twitter" target="_blank">X</a>
-                                    </div>
-                                    <div class="contact-details">
-                                        <p>him@gatech.edu</p>
-                                        <p>+1 (978) 992-7981</p>
+                                    <div class="contact-info">
+                                        <div class="social-links">
+                                            <a href="https://www.linkedin.com/in/jacksonbelanger/" class="btn btn-social linkedin" target="_blank">LinkedIn</a>
+                                            <a href="https://x.com/jacksonbelang" class="btn btn-social twitter" target="_blank">X</a>
+                                        </div>
+                                        <div class="contact-details">
+                                            <p>him@gatech.edu</p>
+                                            <p>+1 (978) 992-7981</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="member-image">
                                 <img src="./IMG_8471.JPG" alt="Jackson B." />
                             </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
             
                     <div class="team-footer">
                         <button id="return-home-team" class="btn btn-primary">
@@ -3166,6 +3197,27 @@
         
         returnHomeButton.addEventListener('click', returnToHome);
         returnHomeTeamButton.addEventListener('click', returnToHome);
+        
+        // Toggle credentials function
+        function toggleCredentials(member) {
+            const credentials = document.getElementById(member + '-credentials');
+            const arrow = document.getElementById(member + '-arrow');
+            
+            if (credentials.classList.contains('expanded')) {
+                credentials.classList.remove('expanded');
+                arrow.classList.remove('expanded');
+                credentials.style.display = 'none';
+            } else {
+                credentials.style.display = 'block';
+                setTimeout(() => {
+                    credentials.classList.add('expanded');
+                    arrow.classList.add('expanded');
+                }, 10);
+            }
+        }
+        
+        // Make toggleCredentials globally available
+        window.toggleCredentials = toggleCredentials;
         
         investmentForm.addEventListener('submit', async (e) => {
             e.preventDefault();
