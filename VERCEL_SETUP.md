@@ -17,9 +17,9 @@ This guide will help you deploy your Paladin website to Vercel with proper envir
 4. Configure the project settings:
    - **Framework Preset**: Other
    - **Root Directory**: `./`
-   - **Build Command**: Leave empty (static site)
-   - **Output Directory**: Leave empty
-   - **Install Command**: `npm install` (optional)
+   - **Build Command**: `npm run build` (or leave empty to use package.json)
+   - **Output Directory**: Leave empty (will use root)
+   - **Install Command**: `npm install`
 
 ### Environment Variables Setup
 In your Vercel project dashboard:
@@ -81,14 +81,15 @@ vercel --prod
 ### Common Build Errors and Solutions
 
 #### Error: "Function Runtimes must have a valid version"
-**Solution**: Updated `vercel.json` with proper runtime version:
+**Solution**: Simplified deployment approach - removed serverless functions and switched to static build:
 ```json
 {
-  "functions": {
-    "api/build.js": {
-      "runtime": "@vercel/node@20.x"
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [...]
     }
-  }
+  ]
 }
 ```
 
