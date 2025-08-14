@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paladin - Autonomous Security Testing</title>
+    <link rel="icon" type="image/png" href="/Users/nicksriv/Downloads/filler/upscaled-image.png">
+    <link rel="shortcut icon" type="image/png" href="/Users/nicksriv/Downloads/filler/upscaled-image.png">
+    <link rel="apple-touch-icon" href="/Users/nicksriv/Downloads/filler/upscaled-image.png">
+    <meta name="description" content="Repo-resident agents that execute full-stack penetration tests and ship reproducible fixes. Find critical vulnerabilities before users do.">
+    
+    <!-- Preconnect to font sources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Font: JetBrains Mono for code -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- Note: Univers 55 Roman should be installed on the system or loaded via Adobe Fonts / font service -->
+    
+    <style>
+        /* CSS Custom Properties for Design Tokens */
+        :root {
+            /* Grid & Spacing */
+            --grid-max-width: 1400px;
+            --grid-gutter: 32px;
+            --grid-margin: 48px;
+            
+            /* Spacing Scale */
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --space-48: 48px;
+            --space-64: 64px;
+            --space-96: 96px;
+            --space-128: 128px;
+            
+            /* Complex Gray Palette */
+            --color-black: #000000;
+            --color-gray-950: #0a0a0a;
+            --color-gray-900: #111111;
+            --color-gray-850: #171717;
+            --color-gray-800: #1a1a1a;
+            --color-gray-750: #262626;
+            --color-gray-700: #2e2e2e;
+            --color-gray-650: #383838;
+            --color-gray-600: #404040;
+            --color-gray-550: #525252;
+            --color-gray-500: #606060;
+            --color-gray-450: #737373;
+            --color-gray-400: #8a8a8a;
+            --color-gray-350: #a3a3a3;
+            --color-gray-300: #b8b8b8;
+            --color-gray-250: #d4d4d4;
+            --color-gray-200: #e5e5e5;
+            --color-gray-150: #f0f0f0;
+            --color-gray-100: #f5f5f5;
+            --color-gray-50: #fafafa;
+            --color-white: #ffffff;
+            
+            /* Typography */
+            --font-sans: 'Univers 55 Roman', 'Univers', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+            
+            /* Motion */
+            --transition-fast: 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--color-gray-100);
+            background-color: var(--color-gray-950);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Skip to Content Link */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            z-index: 999;
+            padding: 1rem 1.5rem;
+            background-color: var(--color-white);
+            color: var(--color-black);
+            text-decoration: none;
+            border-radius: 0 0 8px 0;
+        }
+        
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+        }
+        
+        /* Typography Scale */
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            font-weight: 400;
+            letter-spacing: -0.03em;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.2;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            line-height: 1.3;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+        
+        h4 {
+            font-size: 1.25rem;
+            line-height: 1.4;
+            font-weight: 400;
+        }
+        
+        .body-large {
+            font-size: 1.125rem;
+            line-height: 1.65;
+        }
+        
+        .caption {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: var(--color-gray-400);
+        }
+        
+        /* Links */
+        a {
+            color: var(--color-gray-200);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        a:hover {
+            color: var(--color-white);
+        }
+        
+        a:focus {
+            outline: 2px solid var(--color-gray-400);
+            outline-offset: 2px;
+            border-radius: 2px;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--color-gray-800);
+        }
+        
+        .nav-container {
+            max-width: var(--grid-max-width);
+            margin: 0 auto;
+            padding: var(--space-16) var(--grid-margin);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 48px;
+            width: auto;
+            vertical-align: middle;
+            filter: brightness(0.9);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--space-4);
+        }
+        
+        .nav-links a {
+            color: var(--color-gray-300);
+            font-weight: 400;
+            padding: var(--space-8) var(--space-16);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: var(--space-16);
+            right: var(--space-16);
+            height: 1px;
+            background-color: var(--color-white);
+            transform: scaleX(0);
+            transition: transform var(--transition-fast);
+        }
+        
+        .nav-links a:hover {
+            color: var(--color-white);
+        }
+        
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+        
+        /* Main Content */
+        main {
+            margin-top: 64px;
+        }
+        
+        /* Container */
+        .container {
+            max-width: var(--grid-max-width);
+            margin: 0 auto;
+            padding: 0 var(--grid-margin);
+        }
+        
+        .hero .container {
+            margin: 0;
+            padding-left: 3%;
+            max-width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Section Spacing */
+        .section {
+            padding: var(--space-96) 0;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .section {
+                padding: var(--space-64) 0;
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: calc(100vh - 64px);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            overflow-x: visible;
+            overflow-y: hidden;
+            background: linear-gradient(135deg, var(--color-gray-950) 0%, var(--color-gray-900) 50%, var(--color-black) 100%);
+            perspective: 1000px;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            z-index: 0;
+            opacity: 0.3;
+            filter: brightness(0.6) contrast(1.1);
+            transform: scale(1);
+            pointer-events: none;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, 
+                rgba(0, 0, 0, 0.5) 0%, 
+                rgba(0, 0, 0, 0.2) 40%, 
+                rgba(0, 0, 0, 0) 60%,
+                transparent 100%);
+            z-index: 1;
+        }
+        
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            overflow: hidden;
+            mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0) 100%);
+            z-index: 1;
+        }
+        
+        .grid-inner {
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform-origin: center center;
+            transition: transform 0.15s ease-out;
+            will-change: transform;
+        }
+        
+        .grid-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            transform: translate(-50%, -50%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 100%;
+            text-align: left;
+        }
+        
+        .hero-text {
+            margin-bottom: var(--space-32);
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        .hero-line {
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-8);
+        }
+        
+        .hero-line-1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--color-gray-200);
+        }
+        
+        .hero-line-2 {
+            font-size: clamp(3.5rem, 7vw, 5.5rem);
+            color: var(--color-gray-100);
+        }
+        
+        .hero-line-3 {
+            font-size: clamp(4rem, 8vw, 7rem);
+            color: var(--color-white);
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+        
+        .hero-subhead {
+            font-size: 1.375rem;
+            line-height: 1.5;
+            color: var(--color-gray-300);
+            max-width: 800px;
+            margin-bottom: var(--space-48);
+            text-align: left;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-16) var(--space-32);
+            font-weight: 400;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            border: 1px solid transparent;
+            min-height: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            border-color: var(--color-white);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: var(--color-gray-100);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-base);
+        }
+        
+        .btn-primary:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-gray-200);
+            border-color: var(--color-gray-600);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--color-gray-900);
+            color: var(--color-white);
+            border-color: var(--color-gray-500);
+        }
+        
+        .btn-text {
+            color: var(--color-gray-400);
+            padding: var(--space-8) var(--space-16);
+            font-weight: 400;
+            text-decoration: none;
+        }
+        
+        .btn-text:hover {
+            color: var(--color-white);
+        }
+        
+        /* Hero Actions */
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-16);
+            align-items: center;
+            margin-bottom: var(--space-48);
+        }
+        
+        /* Trust Indicators */
+        .trust-indicators {
+            display: flex;
+            gap: var(--space-48);
+            margin-bottom: var(--space-32);
+            padding: var(--space-24) 0;
+            border-top: 1px solid var(--color-gray-800);
+            border-bottom: 1px solid var(--color-gray-800);
+        }
+        
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            color: var(--color-gray-400);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* KPI Section */
+        .kpi-section {
+            background-color: var(--color-black);
+            border-top: 1px solid var(--color-gray-800);
+            border-bottom: 1px solid var(--color-gray-800);
+            padding: var(--space-64) 0;
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background-color: var(--color-gray-800);
+        }
+        
+        @media (max-width: 768px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .kpi-item {
+            background-color: var(--color-black);
+            padding: var(--space-48) var(--space-32);
+            text-align: center;
+            transition: all var(--transition-base);
+        }
+        
+        .kpi-item:hover {
+            background-color: var(--color-gray-950);
+        }
+        
+        .kpi-value {
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--color-white);
+            line-height: 1;
+            margin-bottom: var(--space-8);
+        }
+        
+        .kpi-label {
+            font-size: 0.75rem;
+            color: var(--color-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--color-gray-700) 20%, 
+                var(--color-gray-700) 80%, 
+                transparent 100%
+            );
+            margin: var(--space-96) 0;
+        }
+        
+        /* Problem/Opportunity Section */
+        .problem-section {
+            background-color: var(--color-gray-900);
+            position: relative;
+        }
+        
+        .problem-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--color-gray-700) 50%, 
+                transparent 100%
+            );
+        }
+        
+        .problem-opportunity {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: var(--space-64);
+            align-items: stretch;
+        }
+        
+        .grid-divider {
+            background: linear-gradient(180deg,
+                transparent 0%,
+                var(--color-gray-700) 20%,
+                var(--color-gray-700) 80%,
+                transparent 100%
+            );
+        }
+        
+        @media (max-width: 768px) {
+            .problem-opportunity {
+                grid-template-columns: 1fr;
+                gap: var(--space-48);
+            }
+            
+            .grid-divider {
+                display: none;
+            }
+        }
+        
+        .problem-column,
+        .opportunity-column {
+            padding: var(--space-32);
+            background-color: var(--color-gray-850);
+            border: 1px solid var(--color-gray-800);
+        }
+        
+        .problem-column h3,
+        .opportunity-column h3 {
+            margin-bottom: var(--space-32);
+            padding-bottom: var(--space-16);
+            border-bottom: 1px solid var(--color-gray-750);
+            color: var(--color-white);
+        }
+        
+        .bullet-list {
+            list-style: none;
+        }
+        
+        .bullet-list li {
+            margin-bottom: var(--space-24);
+            padding-left: var(--space-32);
+            position: relative;
+            line-height: 1.6;
+            color: var(--color-gray-300);
+        }
+        
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.75em;
+            width: 4px;
+            height: 1px;
+            background-color: var(--color-gray-500);
+        }
+        
+        .bullet-list strong {
+            color: var(--color-gray-100);
+            font-weight: 400;
+            display: block;
+            margin-bottom: var(--space-4);
+        }
+        
+        /* Value Props Section */
+        .value-section {
+            background: linear-gradient(180deg, var(--color-gray-950) 0%, var(--color-black) 100%);
+            position: relative;
+        }
+        
+        .value-section h2 {
+            text-align: center;
+            margin-bottom: var(--space-64);
+            color: var(--color-white);
+        }
+        
+        .value-props-grid {
+            display: grid;
+            gap: 1px;
+            background-color: var(--color-gray-700);
+            border: 1px solid var(--color-gray-700);
+        }
+        
+        .value-prop-item {
+            padding: var(--space-48) var(--space-32);
+            background-color: var(--color-black);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-prop-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--color-gray-600);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform var(--transition-base);
+        }
+        
+        .value-prop-item:hover {
+            background-color: var(--color-gray-950);
+        }
+        
+        .value-prop-item:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .value-prop-content strong {
+            display: block;
+            margin-bottom: var(--space-8);
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--color-white);
+        }
+        
+        .value-prop-content {
+            color: var(--color-gray-300);
+        }
+        
+        .outcome-metrics {
+            text-align: center;
+            margin-top: var(--space-64);
+            padding: var(--space-32);
+            background-color: var(--color-gray-900);
+            border: 1px solid var(--color-gray-800);
+            font-style: italic;
+            color: var(--color-gray-300);
+        }
+        
+        /* How It Works */
+        .how-section {
+            background-color: var(--color-gray-900);
+            position: relative;
+        }
+        
+        .how-section h2 {
+            text-align: center;
+            margin-bottom: var(--space-64);
+            color: var(--color-white);
+        }
+        
+        .steps-container {
+            position: relative;
+        }
+        
+        .steps-line {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--color-gray-700) 10%,
+                var(--color-gray-700) 90%,
+                transparent 100%
+            );
+            z-index: 1;
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-32);
+            position: relative;
+            z-index: 2;
+        }
+        
+        @media (max-width: 968px) {
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .steps-line {
+                display: none;
+            }
+        }
+        
+        .step-card {
+            background-color: var(--color-gray-850);
+            border: 1px solid var(--color-gray-750);
+            padding: var(--space-48) var(--space-32) var(--space-32);
+            position: relative;
+            transition: all var(--transition-base);
+        }
+        
+        .step-card:hover {
+            background-color: var(--color-gray-800);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+        
+        .step-number {
+            font-size: 3rem;
+            font-weight: 100;
+            color: var(--color-gray-600);
+            line-height: 1;
+            margin-bottom: var(--space-24);
+        }
+        
+        .step-card h4 {
+            margin-bottom: var(--space-16);
+            color: var(--color-white);
+        }
+        
+        .step-description {
+            color: var(--color-gray-400);
+            line-height: 1.6;
+        }
+        
+        .reproducibility-note {
+            text-align: center;
+            padding: var(--space-48);
+            margin-top: var(--space-64);
+            background-color: var(--color-black);
+            border: 1px solid var(--color-gray-800);
+            position: relative;
+        }
+        
+        .reproducibility-note::before,
+        .reproducibility-note::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 1px;
+            background-color: var(--color-gray-700);
+            top: 50%;
+        }
+        
+        .reproducibility-note::before {
+            left: var(--space-32);
+        }
+        
+        .reproducibility-note::after {
+            right: var(--space-32);
+        }
+        
+        /* Why Paladin Grid */
+        .why-section {
+            background: linear-gradient(180deg, var(--color-black) 0%, var(--color-gray-950) 100%);
+        }
+        
+        .why-section h2 {
+            text-align: center;
+            margin-bottom: var(--space-64);
+            color: var(--color-white);
+        }
+        
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background-color: var(--color-gray-700);
+        }
+        
+        @media (max-width: 968px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .why-card {
+            padding: var(--space-48);
+            background-color: var(--color-gray-900);
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .why-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--color-gray-700);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-base);
+        }
+        
+        .why-card:hover {
+            background-color: var(--color-gray-850);
+        }
+        
+        .why-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .why-card h4 {
+            margin-bottom: var(--space-16);
+            color: var(--color-white);
+        }
+        
+        .why-card p {
+            color: var(--color-gray-300);
+            line-height: 1.6;
+        }
+        
+        .why-card .proof {
+            margin-top: var(--space-16);
+            font-size: 0.875rem;
+            color: var(--color-gray-500);
+            font-style: italic;
+        }
+        
+        /* Use Cases */
+        .use-cases-section {
+            background-color: var(--color-gray-900);
+            position: relative;
+        }
+        
+        .use-cases-section h2 {
+            text-align: center;
+            margin-bottom: var(--space-64);
+            color: var(--color-white);
+        }
+        
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-32);
+        }
+        
+        @media (max-width: 968px) {
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .use-case-card {
+            padding: var(--space-48);
+            background-color: var(--color-gray-850);
+            border: 1px solid var(--color-gray-800);
+            transition: all var(--transition-base);
+            position: relative;
+        }
+        
+        .use-case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--color-gray-600) 50%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+        
+        .use-case-card:hover {
+            background-color: var(--color-gray-800);
+            border-color: var(--color-gray-700);
+        }
+        
+        .use-case-card:hover::before {
+            opacity: 1;
+        }
+        
+        .use-case-card h4 {
+            color: var(--color-white);
+            margin-bottom: var(--space-24);
+            padding-bottom: var(--space-16);
+            border-bottom: 1px solid var(--color-gray-750);
+        }
+        
+        .use-case-list {
+            list-style: none;
+        }
+        
+        .use-case-list li {
+            margin-bottom: var(--space-16);
+            padding-left: var(--space-24);
+            position: relative;
+            color: var(--color-gray-300);
+        }
+        
+        .use-case-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            width: 8px;
+            height: 1px;
+            background-color: var(--color-gray-600);
+        }
+        
+        .use-case-kpi {
+            margin-top: var(--space-32);
+            padding-top: var(--space-24);
+            border-top: 1px solid var(--color-gray-750);
+            font-size: 0.875rem;
+            color: var(--color-gray-400);
+        }
+        
+        /* Security & Compliance */
+        .security-section {
+            background: linear-gradient(180deg, var(--color-gray-950) 0%, var(--color-black) 100%);
+            position: relative;
+        }
+        
+        .security-section h2 {
+            text-align: center;
+            margin-bottom: var(--space-64);
+            color: var(--color-white);
+        }
+        
+        .security-content {
+            background-color: var(--color-gray-900);
+            border: 1px solid var(--color-gray-800);
+            padding: var(--space-64);
+        }
+        
+        .security-grid {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: var(--space-64);
+            margin-bottom: var(--space-64);
+        }
+        
+        .security-divider {
+            background: var(--color-gray-800);
+        }
+        
+        @media (max-width: 768px) {
+            .security-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-48);
+            }
+            
+            .security-divider {
+                display: none;
+            }
+        }
+        
+        .security-subsection h4 {
+            margin-bottom: var(--space-24);
+            color: var(--color-white);
+            font-size: 1.5rem;
+        }
+        
+        .security-list {
+            list-style: none;
+        }
+        
+        .security-list li {
+            margin-bottom: var(--space-16);
+            padding: var(--space-16);
+            background-color: var(--color-gray-850);
+            border-left: 2px solid var(--color-gray-700);
+            color: var(--color-gray-300);
+            transition: all var(--transition-fast);
+        }
+        
+        .security-list li:hover {
+            background-color: var(--color-gray-800);
+            border-left-color: var(--color-gray-500);
+            color: var(--color-gray-100);
+        }
+        
+        /* Integration Logos */
+        .integrations-section {
+            text-align: center;
+            padding: var(--space-64) 0;
+            background-color: var(--color-gray-900);
+            border-top: 1px solid var(--color-gray-800);
+        }
+        
+        .integrations-section h3 {
+            margin-bottom: var(--space-48);
+            color: var(--color-white);
+        }
+        
+        .integration-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1px;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--color-gray-700);
+            padding: 1px;
+        }
+        
+        .logo-item {
+            padding: var(--space-24) var(--space-32);
+            background-color: var(--color-gray-850);
+            font-weight: 400;
+            color: var(--color-gray-400);
+            transition: all var(--transition-fast);
+            min-width: 140px;
+        }
+        
+        .logo-item:hover {
+            background-color: var(--color-gray-800);
+            color: var(--color-gray-200);
+        }
+        
+        /* Platform Features Section */
+        .platform-section {
+            background-color: var(--color-white);
+            padding: var(--space-128) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .platform-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--color-gray-300) 20%,
+                var(--color-gray-300) 80%,
+                transparent 100%
+            );
+        }
+        
+        .platform-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--color-gray-300) 20%,
+                var(--color-gray-300) 80%,
+                transparent 100%
+            );
+        }
+        
+        .platform-features {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-96);
+        }
+        
+        .platform-item {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: var(--space-64);
+            align-items: flex-start;
+            opacity: 0.8;
+            transition: opacity var(--transition-base);
+        }
+        
+        .platform-item:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 968px) {
+            .platform-item {
+                grid-template-columns: 1fr;
+                gap: var(--space-32);
+                text-align: center;
+            }
+            
+            .platform-meta {
+                order: 2;
+            }
+            
+            .platform-content {
+                order: 1;
+            }
+        }
+        
+        .platform-meta {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-24);
+            position: relative;
+        }
+        
+        .platform-number {
+            font-size: 0.875rem;
+            color: var(--color-gray-600);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+        
+        .platform-description {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--color-gray-700);
+            font-weight: 300;
+            transition: opacity 0.3s ease-out;
+        }
+        
+        .platform-item:hover .platform-description {
+            opacity: 0;
+        }
+        
+        .platform-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .platform-name {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            color: var(--color-black);
+            line-height: 0.9;
+            transition: all var(--transition-base);
+        }
+        
+        .platform-item:nth-child(2) .platform-name {
+            color: var(--color-gray-900);
+        }
+        
+        .platform-item:nth-child(3) .platform-name {
+            color: var(--color-gray-800);
+        }
+        
+        .platform-item:nth-child(4) .platform-name {
+            color: var(--color-gray-700);
+        }
+        
+        .platform-item:hover .platform-name {
+            transform: translateX(10px);
+        }
+        
+        .platform-description-typed {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--color-gray-600);
+            font-weight: 300;
+            max-width: 600px;
+            min-height: 3.5em;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            font-family: var(--font-mono);
+            letter-spacing: 0.02em;
+            margin-top: var(--space-24);
+            display: block;
+        }
+        
+        .platform-item:hover .platform-description-typed {
+            opacity: 1;
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--color-gray-600);
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .platform-name {
+                font-size: clamp(2.5rem, 10vw, 4rem);
+            }
+            
+            .platform-item:hover .platform-name {
+                transform: none;
+            }
+            
+            .platform-description-typed {
+                font-size: 0.875rem;
+            }
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            text-align: center;
+            padding: var(--space-128) 0;
+            background: radial-gradient(ellipse at center, var(--color-gray-900) 0%, var(--color-black) 70%);
+            position: relative;
+        }
+        
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: var(--space-64);
+            background: linear-gradient(180deg,
+                transparent 0%,
+                var(--color-gray-700) 100%
+            );
+        }
+        
+        .final-cta h2 {
+            margin-bottom: var(--space-24);
+            color: var(--color-white);
+        }
+        
+        .final-cta .body-large {
+            margin-bottom: var(--space-48);
+            color: var(--color-gray-300);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--color-black);
+            border-top: 1px solid var(--color-gray-800);
+            padding: var(--space-96) 0 var(--space-48);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-64);
+            margin-bottom: var(--space-64);
+        }
+        
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-48);
+            }
+        }
+        
+        .footer-section h5 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-bottom: var(--space-24);
+            font-weight: 400;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--space-12);
+        }
+        
+        .footer-links a {
+            color: var(--color-gray-400);
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-gray-200);
+        }
+        
+        .footer-bottom {
+            padding-top: var(--space-48);
+            border-top: 1px solid var(--color-gray-800);
+            text-align: center;
+            color: var(--color-gray-500);
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive Navigation */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --grid-margin: 24px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .trust-indicators {
+                flex-direction: column;
+                gap: var(--space-16);
+            }
+        }
+        
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to Content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="#" class="logo" aria-label="Paladin home">
+                <img src="/Users/nicksriv/Downloads/filler/upscaled-image (1) (1).png" alt="Paladin">
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+            <ul class="nav-links">
+                <li><a href="#product">Product</a></li>
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#why-paladin">Why Paladin</a></li>
+                <li><a href="#use-cases">Use cases</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <video class="hero-video" autoplay loop muted playsinline>
+                <source src="/Users/nicksriv/Downloads/filler/Aug_14__0715_83s_202508140943_lw1bn.mp4" type="video/mp4">
+            </video>
+            <div class="hero-grid">
+                <div class="grid-inner"></div>
+                <div class="grid-glow"></div>
+            </div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-line hero-line-1">Maximal context.</div>
+                        <div class="hero-line hero-line-2">CySec & Penetration testing.</div>
+                        <div class="hero-line hero-line-3">Ship agentic reproducibility.</div>
+                    </div>
+                    <p class="hero-subhead">
+                        Repo-resident agents perform full-stack penetration tests, trace every action, 
+                        and open PRs with reproducible fixes — so you find critical vulnerabilities before users do.
+                    </p>
+                    
+                    <div class="trust-indicators">
+                        <div class="trust-item">Self-hosted option</div>
+                        <div class="trust-item">Reproducible runs</div>
+                        <div class="trust-item">PR-ready fixes</div>
+                    </div>
+                    
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn btn-primary"><span>Request early access</span></a>
+                        <a href="#demo" class="btn btn-secondary">Watch 2-min demo</a>
+                        <a href="#docs" class="btn btn-text">Private Alpha</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Platform Features Section -->
+        <section class="platform-section">
+            <div class="container">
+                <div class="platform-features">
+                    <div class="platform-item" data-description="Discovers and tests edge cases that developers miss - null values, empty arrays, boundary integers, malformed inputs, race conditions, and unexpected state transitions. Ensures your code handles the weird stuff users inevitably throw at it.">
+                        <div class="platform-meta">
+                            <span class="platform-number">/01</span>
+                            <p class="platform-description">
+                                Comprehensive testing<br>
+                                of boundary conditions<br>
+                                and corner cases
+                            </p>
+                        </div>
+                        <div class="platform-content">
+                            <div class="platform-name">Edge-Cases</div>
+                            <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-item" data-description="Full-spectrum security testing: SQL injection, XSS, CSRF, authentication bypass, privilege escalation, SSRF, and zero-days. Thinks like an attacker but reports like a defender with clear remediation paths.">
+                        <div class="platform-meta">
+                            <span class="platform-number">/02</span>
+                            <p class="platform-description">
+                                Advanced cybersecurity<br>
+                                vulnerability detection<br>
+                                and exploitation testing
+                            </p>
+                        </div>
+                        <div class="platform-content">
+                            <div class="platform-name">CySec</div>
+                            <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-item" data-description="Generates production-ready pull requests with fixes, comprehensive test suites, updated documentation, and detailed commit messages. Every PR includes impact analysis and rollback strategies.">
+                        <div class="platform-meta">
+                            <span class="platform-number">/03</span>
+                            <p class="platform-description">
+                                Automated pull request<br>
+                                generation with fixes,<br>
+                                tests, and documentation
+                            </p>
+                        </div>
+                        <div class="platform-content">
+                            <div class="platform-name">Auto PRs</div>
+                            <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-item" data-description="Maximizes context through multi-agent orchestration, MCP protocols, and deep AST/CST analysis. Uses reinforcement learning to train agents native to your team's codebase, understanding your unique patterns, conventions, and architectural decisions. Every run improves the model's understanding of your specific code ecosystem.">
+                        <div class="platform-meta">
+                            <span class="platform-number">/04</span>
+                            <p class="platform-description">
+                                Multi-agent context<br>
+                                maximization with<br>
+                                codebase-native RL
+                            </p>
+                        </div>
+                        <div class="platform-content">
+                            <div class="platform-name">"Golden" Repository</div>
+                            <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- KPI Strip -->
+        <section class="kpi-section">
+            <div class="container">
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-value">3.2x</div>
+                        <div class="kpi-label">Coverage vs Manual Tests</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">87%</div>
+                        <div class="kpi-label">MTTR Reduction</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">&lt;1hr</div>
+                        <div class="kpi-label">Setup Time</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">100%</div>
+                        <div class="kpi-label">Reproducible Runs</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Problem/Opportunity -->
+        <section class="section problem-section">
+            <div class="container">
+                <div class="problem-opportunity">
+                    <div class="problem-column">
+                        <h3>Today's agents aren't enough</h3>
+                        <ul class="bullet-list">
+                            <li><strong>Frontend-only scope</strong> They miss API, auth, and infrastructure paths.</li>
+                            <li><strong>No reproducibility</strong> Hard to trace or re-run failed tests.</li>
+                            <li><strong>Ad-hoc code paths</strong> LLM-generated features introduce silent vulnerabilities.</li>
+                            <li><strong>Context limitations</strong> Single-agent workflows stall on large codebases.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="grid-divider"></div>
+                    
+                    <div class="opportunity-column">
+                        <h3>What's needed</h3>
+                        <ul class="bullet-list">
+                            <li><strong>Full-stack coverage</strong> Agents that live in your repo and test like adversaries.</li>
+                            <li><strong>Deterministic testing</strong> Auditable runs that file patch PRs you can merge.</li>
+                            <li><strong>Context at scale</strong> Multi-agent orchestration with code graph reasoning.</li>
+                            <li><strong>Built-in remediation</strong> Fixes that ship with tests and risk assessments.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- What Paladin Does -->
+        <section class="section value-section" id="product">
+            <div class="container">
+                <h2>What Paladin does</h2>
+                
+                <div class="value-props-grid">
+                    <div class="value-prop-item">
+                        <div class="value-prop-content">
+                            <strong>Full-stack penetration testing</strong>
+                            Tests across UI, API, services, and data flows — not just frontend interactions.
+                        </div>
+                    </div>
+                    <div class="value-prop-item">
+                        <div class="value-prop-content">
+                            <strong>Max-context reasoning</strong>
+                            Indexes AST/CST, dependencies, secrets, auth, and data flows to test real attack paths.
+                        </div>
+                    </div>
+                    <div class="value-prop-item">
+                        <div class="value-prop-content">
+                            <strong>Automated remediation</strong>
+                            Opens PRs with diffs, unit/integration tests, and detailed risk assessments.
+                        </div>
+                    </div>
+                    <div class="value-prop-item">
+                        <div class="value-prop-content">
+                            <strong>Deterministic runs</strong>
+                            Seeded environments, trace logs, and artifacts for complete audit trails and replay.
+                        </div>
+                    </div>
+                    <div class="value-prop-item">
+                        <div class="value-prop-content">
+                            <strong>Policy-safe autonomy</strong>
+                            RL-guided actions operate within your allow/deny guardrails and compliance requirements.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="outcome-metrics">
+                    Outcome targets: increase coverage by 3x, reduce mean time to remediate by 87%, 
+                    and find high-severity issues before users see them.
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works -->
+        <section class="section how-section" id="how-it-works">
+            <div class="container">
+                <h2>How it works</h2>
+                
+                <div class="steps-container">
+                    <div class="steps-line"></div>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">01</div>
+                            <h4>Connect</h4>
+                            <p class="step-description">
+                                Link GitHub/GitLab repositories and select target services and environments for testing.
+                            </p>
+                        </div>
+                        
+                        <div class="step-card">
+                            <div class="step-number">02</div>
+                            <h4>Index & Model</h4>
+                            <p class="step-description">
+                                Build a comprehensive code graph across UI, API, services, and infrastructure edges.
+                            </p>
+                        </div>
+                        
+                        <div class="step-card">
+                            <div class="step-number">03</div>
+                            <h4>Plan & Attack</h4>
+                            <p class="step-description">
+                                Generate attack scenarios and execute multi-agent tests in isolated environments.
+                            </p>
+                        </div>
+                        
+                        <div class="step-card">
+                            <div class="step-number">04</div>
+                            <h4>Patch & Verify</h4>
+                            <p class="step-description">
+                                Open PRs with fixes, tests, and security notes. Replay scenarios to prove closure.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reproducibility-note">
+                    <p><strong>Every run is seedable, logged, and re-runnable</strong> for complete audit trails and regression testing.</p>
+                    <a href="#trace-example" class="btn-text">View example trace</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Paladin -->
+        <section class="section why-section" id="why-paladin">
+            <div class="container">
+                <h2>Why Paladin</h2>
+                
+                <div class="why-grid">
+                    <div class="why-card">
+                        <h4>Full-stack, not surface-level</h4>
+                        <p>Goes beyond UX flows into APIs, services, and infrastructure edges.</p>
+                        <p class="proof">Tests auth bypass, SSRF, privilege escalation</p>
+                    </div>
+                    
+                    <div class="why-card">
+                        <h4>Context that compounds</h4>
+                        <p>Code-graph memory prevents "groundhog-day" fixes and missed connections.</p>
+                        <p class="proof">AST/CST indexing + dependency mapping</p>
+                    </div>
+                    
+                    <div class="why-card">
+                        <h4>Reproducibility by design</h4>
+                        <p>Deterministic traces for trust, compliance, and regression testing.</p>
+                        <p class="proof">Seeded runs + environment capture</p>
+                    </div>
+                    
+                    <div class="why-card">
+                        <h4>Autonomy with control</h4>
+                        <p>RL-guided policies keep agents effective within your security boundaries.</p>
+                        <p class="proof">Allow/deny rules + egress policies</p>
+                    </div>
+                    
+                    <div class="why-card">
+                        <h4>Private by default</h4>
+                        <p>Self-hosted or VPC-isolated deployment keeps your data in your environment.</p>
+                        <p class="proof">Air-gapped mode available</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Use Cases -->
+        <section class="section use-cases-section" id="use-cases">
+            <div class="container">
+                <h2>Use cases</h2>
+                
+                <div class="use-cases-grid">
+                    <div class="use-case-card">
+                        <h4>Security leads</h4>
+                        <ul class="use-case-list">
+                            <li>Pre-release pen tests with reproducible evidence</li>
+                            <li>Gate merges with risk-scored PRs and coverage thresholds</li>
+                        </ul>
+                        <div class="use-case-kpi">
+                            <strong>Typical coverage:</strong> 95%+ of attack surface
+                        </div>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h4>Founders & Engineering leaders</h4>
+                        <ul class="use-case-list">
+                            <li>Continuous hardening for AI-accelerated teams shipping fast</li>
+                            <li>Reduce on-call fire drills; shorten MTTR with ready-to-merge fixes</li>
+                        </ul>
+                        <div class="use-case-kpi">
+                            <strong>Setup time:</strong> Under 1 hour
+                        </div>
+                    </div>
+                    
+                    <div class="use-case-card">
+                        <h4>AI product teams</h4>
+                        <ul class="use-case-list">
+                            <li>Detect prompt injection, auth/session flaws, data-leak paths early</li>
+                            <li>Validate LLM-generated code with adversarial scenarios</li>
+                        </ul>
+                        <div class="use-case-kpi">
+                            <strong>False positive rate:</strong> &lt;5%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Security & Compliance -->
+        <section class="section security-section" id="security">
+            <div class="container">
+                <h2>Security & Compliance</h2>
+                
+                <div class="security-content">
+                    <div class="security-grid">
+                        <div class="security-subsection">
+                            <h4>Controls</h4>
+                            <ul class="security-list">
+                                <li>Least-privilege tokens with read-only defaults</li>
+                                <li>Network egress policies and sandboxed execution</li>
+                                <li>SSO/SAML integration with role-based access</li>
+                                <li>Comprehensive audit logging and trace retention</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="security-divider"></div>
+                        
+                        <div class="security-subsection">
+                            <h4>Compliance</h4>
+                            <ul class="security-list">
+                                <li>SOC 2 Type II (in progress)</li>
+                                <li>No training on customer code</li>
+                                <li>Data residency controls</li>
+                                <li>Air-gapped deployment option</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="integrations-section">
+                        <h3>Integrations</h3>
+                        <div class="integration-logos">
+                            <div class="logo-item">GitHub</div>
+                            <div class="logo-item">GitLab</div>
+                            <div class="logo-item">AWS</div>
+                            <div class="logo-item">GCP</div>
+                            <div class="logo-item">Azure</div>
+                            <div class="logo-item">Jira</div>
+                            <div class="logo-item">Slack</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Final CTA -->
+        <section class="final-cta" id="contact">
+            <div class="container">
+                <h2>Build with us</h2>
+                <p class="body-large">
+                    Join our design partner program and shape the future of autonomous security testing.
+                </p>
+                <div class="hero-actions" style="justify-content: center;">
+                    <a href="mailto:srivastavan@berkeley.edu" class="btn btn-primary"><span>Request early access</span></a>
+                    <a href="tel:+19087395885" class="btn btn-secondary">Schedule a call</a>
+                </div>
+                <p class="caption" style="margin-top: var(--space-24);">
+                    srivastavan@berkeley.edu | +1 (908) 739-5885
+                </p>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h5>Product</h5>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#docs">Documentation</a></li>
+                        <li><a href="#changelog">Changelog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h5>Company</h5>
+                    <ul class="footer-links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h5>Legal</h5>
+                    <ul class="footer-links">
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                        <li><a href="#security">Security</a></li>
+                        <li><a href="#compliance">Compliance</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h5>Resources</h5>
+                    <ul class="footer-links">
+                        <li><a href="#status">System Status</a></li>
+                        <li><a href="#support">Support</a></li>
+                        <li><a href="#community">Community</a></li>
+                        <li><a href="#partners">Partners</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Paladin. Autonomous full-stack security testing.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.section').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+        
+        // Grid cursor interaction
+        const heroGrid = document.querySelector('.hero-grid');
+        const gridInner = document.querySelector('.grid-inner');
+        const gridGlow = document.querySelector('.grid-glow');
+        
+        if (heroGrid && gridInner && gridGlow) {
+            let isHovering = false;
+            
+            heroGrid.addEventListener('mouseenter', () => {
+                isHovering = true;
+                gridGlow.style.opacity = '1';
+            });
+            
+            heroGrid.addEventListener('mouseleave', () => {
+                isHovering = false;
+                gridGlow.style.opacity = '0';
+                gridInner.style.transform = 'scale(1) rotate(0deg)';
+            });
+            
+            heroGrid.addEventListener('mousemove', (e) => {
+                if (!isHovering) return;
+                
+                const rect = heroGrid.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Update glow position
+                gridGlow.style.left = x + 'px';
+                gridGlow.style.top = y + 'px';
+                
+                // Calculate transform based on mouse position
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                const rotateX = deltaY * -5; // Max 5 degrees
+                const rotateY = deltaX * 5; // Max 5 degrees
+                const scale = 1 + (Math.abs(deltaX) + Math.abs(deltaY)) * 0.02; // Max scale 1.04
+                
+                gridInner.style.transform = `scale(${scale}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+        }
+        
+        // Typing animation for platform items
+        const platformItems = document.querySelectorAll('.platform-item');
+        const typingAnimations = new Map();
+        
+        platformItems.forEach(item => {
+            const description = item.getAttribute('data-description');
+            const typingText = item.querySelector('.typing-text');
+            const cursor = item.querySelector('.typing-cursor');
+            let typingTimeout;
+            let currentIndex = 0;
+            let isTyping = false;
+            
+            item.addEventListener('mouseenter', () => {
+                if (isTyping) return;
+                
+                isTyping = true;
+                currentIndex = 0;
+                typingText.textContent = '';
+                cursor.style.display = 'inline-block';
+                
+                const typeCharacter = () => {
+                    if (currentIndex < description.length) {
+                        typingText.textContent += description[currentIndex];
+                        currentIndex++;
+                        typingTimeout = setTimeout(typeCharacter, 15); // Fast typing speed
+                    } else {
+                        cursor.style.display = 'none';
+                        isTyping = false;
+                    }
+                };
+                
+                typeCharacter();
+                typingAnimations.set(item, typingTimeout);
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                }
+                const timeout = typingAnimations.get(item);
+                if (timeout) {
+                    clearTimeout(timeout);
+                    typingAnimations.delete(item);
+                }
+                typingText.textContent = '';
+                cursor.style.display = 'inline-block';
+                isTyping = false;
+                currentIndex = 0;
+            });
+        });
+    </script>
+</body>
+</html>
