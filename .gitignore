@@ -20,6 +20,7 @@ yarn-error.log*
 
 # Vercel
 .vercel
+.vercel.json.local
 
 # Build outputs
 dist/
