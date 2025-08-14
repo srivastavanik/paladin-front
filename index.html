@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paladin - Autonomous Security Testing</title>
-    <link rel="icon" type="image/png" href="/Users/nicksriv/Downloads/filler/upscaled-image.png">
-    <link rel="shortcut icon" type="image/png" href="/Users/nicksriv/Downloads/filler/upscaled-image.png">
-    <link rel="apple-touch-icon" href="/Users/nicksriv/Downloads/filler/upscaled-image.png">
+    <link rel="icon" type="image/png" href="./upscaled-image.png">
+    <link rel="shortcut icon" type="image/png" href="./upscaled-image.png">
+    <link rel="apple-touch-icon" href="./upscaled-image.png">
     <meta name="description" content="Repo-resident agents that execute full-stack penetration tests and ship reproducible fixes. Find critical vulnerabilities before users do.">
     
     <!-- Preconnect to font sources -->
@@ -1647,8 +1647,8 @@
     <!-- Navigation -->
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#" class="logo" aria-label="Paladin home">
-                <img src="/Users/nicksriv/Downloads/filler/upscaled-image (1) (1).png" alt="Paladin">
+            <a href="#" class="logo" id="logo-link" aria-label="Paladin home">
+                <img src="./upscaled-image (1) (1).png" alt="Paladin">
             </a>
             <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
             <ul class="nav-links">
@@ -1666,7 +1666,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <video class="hero-video" autoplay loop muted playsinline>
-                <source src="/Users/nicksriv/Downloads/filler/Aug_14__0715_83s_202508140943_lw1bn.mp4" type="video/mp4">
+                <source src="./Aug_14__0715_83s_202508140943_lw1bn.mp4" type="video/mp4">
             </video>
             <div class="hero-grid">
                 <div class="grid-inner"></div>
@@ -2070,7 +2070,7 @@
                     <div class="investment-header">
                         <h2>Investment Opportunity</h2>
                         <p class="investment-intro">
-                            Paladin is seeking strategic investors for our upcoming funding round, anticipated within the next 1-2 months. 
+                            Paladin is currently seeking strategic investors for our <strong>pre-seed/seed funding round</strong>, anticipated within the next 1-2 months. 
                             We value partnerships and are committed to negotiating all terms collaboratively. In very few cases are we 
                             willing to accept predetermined terms, as we believe in building mutually beneficial relationships with our investors.
                         </p>
@@ -2177,9 +2177,6 @@
             </div>
         </div>
     </footer>
-    
-    <!-- Load configuration -->
-    <script src="config.js"></script>
     
     <script>
         // Simple fade-in animation on scroll
@@ -2304,14 +2301,17 @@
         const returnHomeButton = document.getElementById('return-home');
         const mainContent = document.querySelector('main');
         
-        // Check if configuration is loaded
-        if (typeof window.CONFIG === 'undefined') {
-            console.error('Configuration not loaded. Please ensure config.js exists and is properly configured.');
-        }
+        // Supabase configuration - will be replaced during build/deployment
+        // These placeholders will be replaced with actual values during deployment
+        const SUPABASE_URL = 'VITE_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = 'VITE_SUPABASE_ANON_KEY';
         
-        // Supabase configuration from config file
-        const SUPABASE_URL = window.CONFIG?.SUPABASE_URL;
-        const SUPABASE_ANON_KEY = window.CONFIG?.SUPABASE_ANON_KEY;
+        // Check if configuration has been properly replaced
+        const isConfigured = !SUPABASE_URL.startsWith('VITE_') && !SUPABASE_ANON_KEY.startsWith('VITE_');
+        
+        if (!isConfigured) {
+            console.warn('Supabase configuration not found. Form submission will not work until properly configured.');
+        }
         
         // Show investment form
         function showInvestmentForm() {
@@ -2355,10 +2355,10 @@
         
         // Submit form to Supabase
         async function submitInvestmentForm(formData) {
-            // Check if configuration is available
-            if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+            // Check if configuration is available and properly replaced
+            if (!isConfigured || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
                 console.error('Supabase configuration not available');
-                alert('Configuration error. Please contact support.');
+                alert('Configuration error. Please contact support at srivastavan@berkeley.edu');
                 return false;
             }
             
@@ -2392,6 +2392,15 @@
                 
                 return false;
             }
+        }
+        
+        // Logo navigation
+        const logoLink = document.getElementById('logo-link');
+        if (logoLink) {
+            logoLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                returnToHome();
+            });
         }
         
         // Event listeners

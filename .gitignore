@@ -1,3 +1,4 @@
+# Environment variables
 .env
 .env.local
 .env.sample
@@ -6,5 +7,29 @@
 /.env.local
 /.env.sample
 /.env.local.sample
+
+# Configuration files with secrets
 config.js
 /config.js
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vercel
+.vercel
+
+# Build outputs
+dist/
+build/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

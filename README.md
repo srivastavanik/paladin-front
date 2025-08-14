@@ -2,17 +2,32 @@
 
 Modern, responsive website for Paladin's autonomous security testing platform.
 
-## Setup
+## Features
 
+- 🚀 Responsive design with modern animations
+- 💼 Investment interest form with Supabase integration
+- 🎯 Pre-seed/seed funding stage clarity
+- 🔒 Secure environment variable configuration
+- ⚡ Optimized for Vercel deployment
+- 🏠 Smart navigation (logo always returns to home)
+
+## Local Development
+
+### Option 1: Simple Static Site (No Form Functionality)
 1. Clone the repository
-2. Copy `config.sample.js` to `config.js`
-3. Update `config.js` with your Supabase credentials:
-   ```javascript
-   window.CONFIG = {
-       SUPABASE_URL: 'your-supabase-url',
-       SUPABASE_ANON_KEY: 'your-supabase-anon-key'
-   };
+2. Open `index.html` in your browser
+3. Form submission will show a configuration warning
+
+### Option 2: Full Development with Vercel
+1. Clone the repository
+2. Install Vercel CLI: `npm i -g vercel`
+3. Create `.env.local` file:
+   ```env
+   SUPABASE_URL=your-supabase-url
+   SUPABASE_ANON_KEY=your-supabase-anon-key
    ```
+4. Run `vercel dev`
+5. Open `http://localhost:3000`
 
 ## Supabase Database Setup
 
@@ -38,15 +53,32 @@ CREATE TABLE investment_interests (
 - Clean, professional styling
 - Form validation and error handling
 
-## Deployment
+## Deployment on Vercel
 
-The site can be deployed to any static hosting service (Netlify, Vercel, GitHub Pages, etc.).
+### Automatic Deployment (Recommended)
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard:
+   - `SUPABASE_URL`: Your Supabase project URL
+   - `SUPABASE_ANON_KEY`: Your Supabase anon/public key
+3. Deploy automatically on every push to main branch
 
-Make sure to:
-1. Set up your `config.js` file with the correct Supabase credentials
-2. Ensure your Supabase table exists and has proper permissions
-3. Test the form submission functionality
+### Manual Deployment
+1. Install Vercel CLI: `npm i -g vercel`
+2. Run `vercel` in project directory
+3. Follow the prompts to set up your project
+4. Add environment variables via Vercel dashboard or CLI:
+   ```bash
+   vercel env add SUPABASE_URL
+   vercel env add SUPABASE_ANON_KEY
+   ```
 
-## Development
+### Security Features
+- ✅ No credentials exposed in frontend code
+- ✅ Environment variables injected at build time
+- ✅ Secure Supabase integration
+- ✅ No sensitive data in repository
 
-Open `index.html` in your browser to view the site locally. Make sure you have a local web server running if you encounter CORS issues with the config.js file.
+## Navigation Features
+- **Smart Logo Navigation**: Clicking the Paladin logo from any page (including investment form) returns to the top of the home page
+- **Investment Clarity**: Clearly states "pre-seed/seed funding round" stage
+- **Smooth Transitions**: All page navigation includes smooth scrolling and transitions
