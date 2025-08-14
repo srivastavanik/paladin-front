@@ -634,6 +634,71 @@
             margin: var(--space-96) 0;
         }
         
+        /* Scope Section */
+        .scope-section {
+            background-color: var(--color-gray-850);
+            border-top: 1px solid var(--color-gray-800);
+            border-bottom: 1px solid var(--color-gray-800);
+        }
+        
+        .scope-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .scope-content h2 {
+            margin-bottom: var(--space-48);
+            color: var(--color-white);
+        }
+        
+        .scope-description {
+            text-align: left;
+        }
+        
+        .scope-description .body-large {
+            margin-bottom: var(--space-32);
+            color: var(--color-gray-200);
+        }
+        
+        .scope-list {
+            list-style: none;
+            margin: var(--space-32) 0;
+            padding: 0;
+        }
+        
+        .scope-list li {
+            margin-bottom: var(--space-24);
+            padding: var(--space-24);
+            background-color: var(--color-gray-800);
+            border-left: 3px solid var(--color-gray-600);
+            color: var(--color-gray-300);
+            line-height: 1.6;
+            transition: all var(--transition-fast);
+        }
+        
+        .scope-list li:hover {
+            background-color: var(--color-gray-750);
+            border-left-color: var(--color-gray-400);
+            color: var(--color-gray-100);
+        }
+        
+        .scope-list strong {
+            color: var(--color-white);
+            font-weight: 400;
+        }
+        
+        .scope-note {
+            margin-top: var(--space-32);
+            padding: var(--space-24);
+            background-color: var(--color-gray-900);
+            border: 1px solid var(--color-gray-700);
+            border-radius: 4px;
+            color: var(--color-gray-300);
+            font-style: italic;
+            text-align: center;
+        }
+        
         /* Problem/Opportunity Section */
         .problem-section {
             background-color: var(--color-gray-900);
@@ -971,6 +1036,107 @@
             font-size: 0.875rem;
             color: var(--color-gray-500);
             font-style: italic;
+        }
+        
+        /* RL Adaptation Section */
+        .rl-section {
+            background: linear-gradient(180deg, var(--color-gray-950) 0%, var(--color-gray-900) 100%);
+            position: relative;
+        }
+        
+        .rl-section h2 {
+            text-align: center;
+            margin-bottom: var(--space-64);
+            color: var(--color-white);
+        }
+        
+        .rl-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .rl-intro {
+            text-align: center;
+            margin-bottom: var(--space-64);
+        }
+        
+        .rl-intro .body-large {
+            color: var(--color-gray-200);
+        }
+        
+        .rl-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-32);
+            margin-bottom: var(--space-64);
+        }
+        
+        @media (max-width: 968px) {
+            .rl-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-24);
+            }
+        }
+        
+        .rl-card {
+            padding: var(--space-32);
+            background-color: var(--color-gray-850);
+            border: 1px solid var(--color-gray-800);
+            transition: all var(--transition-base);
+            position: relative;
+        }
+        
+        .rl-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                var(--color-gray-600) 0%,
+                var(--color-gray-500) 50%,
+                var(--color-gray-600) 100%
+            );
+            opacity: 0;
+            transition: opacity var(--transition-base);
+        }
+        
+        .rl-card:hover {
+            background-color: var(--color-gray-800);
+            border-color: var(--color-gray-700);
+            transform: translateY(-2px);
+        }
+        
+        .rl-card:hover::before {
+            opacity: 1;
+        }
+        
+        .rl-card h4 {
+            margin-bottom: var(--space-16);
+            color: var(--color-white);
+        }
+        
+        .rl-card p {
+            color: var(--color-gray-300);
+            line-height: 1.6;
+        }
+        
+        .rl-note {
+            text-align: center;
+            padding: var(--space-32);
+            background-color: var(--color-black);
+            border: 1px solid var(--color-gray-800);
+            border-radius: 4px;
+        }
+        
+        .rl-note p {
+            color: var(--color-gray-300);
+            margin: 0;
+        }
+        
+        .rl-note strong {
+            color: var(--color-white);
         }
         
         /* Use Cases */
@@ -1920,7 +2086,6 @@
                     
                     <div class="hero-actions">
                         <a href="#investment" class="btn btn-investment"><span>Looking to Invest?</span></a>
-                        <a href="#demo" class="btn btn-secondary">Watch 2-min demo</a>
                         <a href="#docs" class="btn btn-text">Private Alpha</a>
                     </div>
                 </div>
@@ -1931,68 +2096,68 @@
         <section class="platform-section">
             <div class="container">
                 <div class="platform-features">
-                    <div class="platform-item" data-description="Discovers and tests edge cases that developers miss - null values, empty arrays, boundary integers, malformed inputs, race conditions, and unexpected state transitions. Ensures your code handles the weird stuff users inevitably throw at it.">
+                    <div class="platform-item" data-description="Native GUIs, Electron, installers/updaters, tray apps, services, and CLIs. Control plane: OS-level input automation, accessibility/UIAutomation trees, window/process introspection, hotkeys, clipboard/IME, file dialogs, inter-process channels. Security surfaces: local privilege escalation via installers/updaters, DLL/LD_PRELOAD hijacking, insecure IPC, path traversal on local file handlers, unsafe deserialization, credential manager/keychain misuse, sandbox and code-signing regressions. Isolation: Disposable desktop VMs (optionally GPU-enabled), snapshot/restore, strict egress allow-lists, signed tool invocations, resource ceilings. Evidence: Synchronized screen capture, OS event logs, filesystem/registry diffs, PCAPs, and trace spans—bundled into the PR.">
                         <div class="platform-meta">
                             <span class="platform-number">/01</span>
                             <p class="platform-description">
-                                Comprehensive testing<br>
-                                of boundary conditions<br>
-                                and corner cases
+                                Desktop application<br>
+                                security testing with<br>
+                                native UI automation
                             </p>
                         </div>
                         <div class="platform-content">
-                            <div class="platform-name">Edge-Cases</div>
+                            <div class="platform-name">Computer-use</div>
                             <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
                         </div>
                     </div>
                     
                     <div class="platform-divider"></div>
                     
-                    <div class="platform-item" data-description="Full-spectrum security testing: SQL injection, XSS, CSRF, authentication bypass, privilege escalation, SSRF, and zero-days. Thinks like an attacker but reports like a defender with clear remediation paths.">
+                    <div class="platform-item" data-description="Web apps, SPAs/MPAs, service workers, WebSockets/WebRTC, HTTP/2 push, CDNs, edge functions. Control plane: Deterministic browser sessions (DevTools Protocol), network interception, HAR/trace capture, storage snapshots (cookies, local/session storage, IndexedDB). Security surfaces: XSS/DOM-XSS, CSRF, CSP/clickjacking gaps, OAuth/OIDC misconfiguration, SameSite/cookie scope, CORS, SSRF via fetch/proxy, cache poisoning, request smuggling, mixed content and service-worker abuse. Isolation: Ephemeral containerized browsers with per-run profiles; network and origin scoping aligned to test plans. Evidence: DevTools traces, HAR files, screenshots/video, request/response bodies, JS errors/stack traces—attached to findings and PRs.">
                         <div class="platform-meta">
                             <span class="platform-number">/02</span>
                             <p class="platform-description">
-                                Advanced cybersecurity<br>
-                                vulnerability detection<br>
-                                and exploitation testing
+                                Web application<br>
+                                security testing via<br>
+                                DevTools Protocol
                             </p>
                         </div>
                         <div class="platform-content">
-                            <div class="platform-name">CySec</div>
+                            <div class="platform-name">Browser-use</div>
                             <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
                         </div>
                     </div>
                     
                     <div class="platform-divider"></div>
                     
-                    <div class="platform-item" data-description="Once vulnerabilities and functionality errors are identified, utilizes multi-LLM orchestration to pinpoint and reach consensus regarding the source of issues, then generates production-ready pull requests with fixes, comprehensive test suites, updated documentation, and detailed commit messages. Every PR includes impact analysis and rollback strategies.">
+                    <div class="platform-item" data-description="Agents execute end-to-end user journeys that span desktop deep-links → browser SSO → API backends → local handlers. The Golden Repository provides the route graph, OAuth client metadata, deep-link URI schemes, and ownership maps so agents coordinate across surfaces. Reproductions may include both a desktop macro and a browser script; both are minimized and persisted as tests.">
                         <div class="platform-meta">
                             <span class="platform-number">/03</span>
                             <p class="platform-description">
-                                Automated pull request<br>
-                                generation with fixes,<br>
-                                tests, and documentation
+                                End-to-end testing<br>
+                                across desktop, browser,<br>
+                                and backend systems
                             </p>
                         </div>
                         <div class="platform-content">
-                            <div class="platform-name">Auto PRs</div>
+                            <div class="platform-name">Cross-context flows</div>
                             <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
                         </div>
                     </div>
                     
                     <div class="platform-divider"></div>
                     
-                    <div class="platform-item" data-description="Maximizes context through multi-agent orchestration, MCP protocols, and deep AST/CST analysis. Uses reinforcement learning to train agents native to your team's codebase, understanding your unique patterns, conventions, and architectural decisions. Every run improves the model's understanding of your specific code ecosystem.">
+                    <div class="platform-item" data-description="AST/CST, CPG, runtime topology, artifacts, MCP connectors, and the agent task graph serve both desktop and browser modalities. MCP adapters expose DevTools traces, desktop VM snapshots, HAR/PCAP artifacts, and route/contract specs uniformly to agents. Function partitioning assigns specialists for Desktop-UI/OS and Web/UI/Network with declared outputs (e.g., 'desktop installer LPE repro + patch' or 'OAuth token scope fix PR').">
                         <div class="platform-meta">
                             <span class="platform-number">/04</span>
                             <p class="platform-description">
-                                Multi-agent context<br>
-                                maximization with<br>
-                                codebase-native RL
+                                Comprehensive context<br>
+                                repository with MCP<br>
+                                agent coordination
                             </p>
                         </div>
                         <div class="platform-content">
-                            <div class="platform-name">"Golden" Repository</div>
+                            <div class="platform-name">Golden Repository</div>
                             <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
                         </div>
                     </div>
@@ -2019,6 +2184,29 @@
                     <div class="kpi-item">
                         <div class="kpi-value">100%</div>
                         <div class="kpi-label">Reproducible Runs</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Scope Statement -->
+        <section class="section scope-section">
+            <div class="container">
+                <div class="scope-content">
+                    <h2>Full-Stack Security Testing</h2>
+                    <div class="scope-description">
+                        <p class="body-large">
+                            Paladin performs full-stack penetration and edge-case testing across <strong>desktop applications</strong> and <strong>web applications</strong>. 
+                            Agents can drive:
+                        </p>
+                        <ul class="scope-list">
+                            <li><strong>Computer-use (desktop):</strong> native Windows/macOS/Linux apps (including Electron, Qt, .NET, JavaFX, CLI tools, background services).</li>
+                            <li><strong>Browser-use (web):</strong> Chromium-family browsers via the DevTools Protocol (e.g., Playwright) for deterministic UI and network control.</li>
+                        </ul>
+                        <p class="scope-note">
+                            Both modalities run under the same plan/verify/patch pipeline, share the Golden Repository context, 
+                            and culminate in automated PRs that can auto-merge under policy.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -2118,7 +2306,8 @@
                             <div class="step-number">02</div>
                             <h4>Index & Model</h4>
                             <p class="step-description">
-                                Build a comprehensive code graph across UI, API, services, and infrastructure edges.
+                                Build comprehensive code graphs, route maps, and desktop manifests (installers, updaters) 
+                                across UI, API, services, and infrastructure edges for both modalities.
                             </p>
                         </div>
                         
@@ -2126,7 +2315,8 @@
                             <div class="step-number">03</div>
                             <h4>Plan & Attack</h4>
                             <p class="step-description">
-                                Generate attack scenarios and execute multi-agent tests in isolated environments.
+                                The Planner considers commit diffs + code/route graphs + desktop manifests to schedule 
+                                both desktop and browser probes with multi-agent coordination.
                             </p>
                         </div>
                         
@@ -2134,14 +2324,15 @@
                             <div class="step-number">04</div>
                             <h4>Patch & Verify</h4>
                             <p class="step-description">
-                                Open PRs with fixes, tests, and security notes. Replay scenarios to prove closure.
+                                Verification requires runtime evidence appropriate to the surface (DevTools trace for web 
+                                flaws; registry/file diffs for desktop issues). PRs include fixes for both modalities.
                             </p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="reproducibility-note">
-                    <p><strong>Every run is seedable, logged, and re-runnable</strong> for complete audit trails and regression testing.</p>
+                    <p><strong>Every run is seedable, logged, and re-runnable</strong> with comprehensive evidence capture from both desktop (screen recordings, OS events, file system diffs) and browser (DevTools traces, HAR files, network logs) contexts for complete audit trails and regression testing.</p>
                     <a href="#trace-example" class="btn-text">View example trace</a>
                 </div>
             </div>
@@ -2181,6 +2372,56 @@
                         <h4>Private by default</h4>
                         <p>Self-hosted or VPC-isolated deployment keeps your data in your environment.</p>
                         <p class="proof">Air-gapped mode available</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- RL Adaptation (Team-Exclusive) -->
+        <section class="section rl-section">
+            <div class="container">
+                <h2>Reinforcement Learning Adaptation</h2>
+                <div class="rl-content">
+                    <div class="rl-intro">
+                        <p class="body-large">
+                            <strong>Team-exclusive RL training</strong> adapts agent behavior across both desktop and browser modalities, 
+                            learning from your specific codebase patterns and security requirements.
+                        </p>
+                    </div>
+                    
+                    <div class="rl-grid">
+                        <div class="rl-card">
+                            <h4>Reward Integration</h4>
+                            <p>
+                                Closure quality across surfaces: merged PRs without edits, stable desktop/browser repro tests, 
+                                eliminated exploit paths, preserved latency budgets.
+                            </p>
+                        </div>
+                        
+                        <div class="rl-card">
+                            <h4>Policy Learning</h4>
+                            <p>
+                                Exploration sequences (desktop macros, browser navigation), input mutation operators, 
+                                model/tool routing (code model vs. UI-control model), and patch locality heuristics 
+                                for UI/desktop versus web codepaths.
+                            </p>
+                        </div>
+                        
+                        <div class="rl-card">
+                            <h4>Cross-Modal Training</h4>
+                            <p>
+                                Agents learn to coordinate between desktop and browser contexts, understanding when 
+                                desktop deep-links should trigger browser flows, and how to maintain session state 
+                                across modality transitions.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="rl-note">
+                        <p>
+                            <strong>Private by design:</strong> All RL training occurs within your environment. 
+                            Your code patterns and security policies remain exclusive to your team.
+                        </p>
                     </div>
                 </div>
             </div>
