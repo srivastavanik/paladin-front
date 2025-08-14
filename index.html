@@ -2178,6 +2178,9 @@
         </div>
     </footer>
     
+    <!-- Load configuration -->
+    <script src="config.js"></script>
+    
     <script>
         // Simple fade-in animation on scroll
         const observerOptions = {
@@ -2301,9 +2304,14 @@
         const returnHomeButton = document.getElementById('return-home');
         const mainContent = document.querySelector('main');
         
-        // Supabase configuration
-        const SUPABASE_URL = 'https://gwkdfvrfuzuyikfimbgh.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3a2RmdnJmdXp1eWlrZmltYmdoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxOTgzMjQsImV4cCI6MjA3MDc3NDMyNH0.wNldnWFwO0JWAzQl-FchJx5Nimaf2F6ed2VVsCJKYcg';
+        // Check if configuration is loaded
+        if (typeof window.CONFIG === 'undefined') {
+            console.error('Configuration not loaded. Please ensure config.js exists and is properly configured.');
+        }
+        
+        // Supabase configuration from config file
+        const SUPABASE_URL = window.CONFIG?.SUPABASE_URL;
+        const SUPABASE_ANON_KEY = window.CONFIG?.SUPABASE_ANON_KEY;
         
         // Show investment form
         function showInvestmentForm() {
@@ -2347,6 +2355,13 @@
         
         // Submit form to Supabase
         async function submitInvestmentForm(formData) {
+            // Check if configuration is available
+            if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+                console.error('Supabase configuration not available');
+                alert('Configuration error. Please contact support.');
+                return false;
+            }
+            
             try {
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/investment_interests`, {
                     method: 'POST',
@@ -2360,12 +2375,21 @@
                 });
                 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
                 }
                 
                 return true;
             } catch (error) {
                 console.error('Error submitting form:', error);
+                
+                // More specific error messages
+                if (error.message.includes('404')) {
+                    console.error('Table "investment_interests" may not exist in Supabase');
+                } else if (error.message.includes('401') || error.message.includes('403')) {
+                    console.error('Authentication error. Check API keys and table permissions.');
+                }
+                
                 return false;
             }
         }

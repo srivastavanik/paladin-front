@@ -1,0 +1,10 @@
+.env
+.env.local
+.env.sample
+.env.local.sample
+/.env
+/.env.local
+/.env.sample
+/.env.local.sample
+config.js
+/config.js
