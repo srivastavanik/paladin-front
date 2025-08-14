@@ -462,6 +462,45 @@
             color: var(--color-white);
         }
         
+        /* Investment Button */
+        .btn-investment {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            border-color: var(--color-white);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-investment::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-black);
+            transition: left var(--transition-base);
+            z-index: 1;
+        }
+        
+        .btn-investment:hover::before {
+            left: 0;
+        }
+        
+        .btn-investment:hover {
+            color: var(--color-white);
+        }
+        
+        .btn-investment span {
+            position: relative;
+            z-index: 2;
+            transition: color var(--transition-base);
+        }
+        
+        .btn-investment:hover span {
+            color: var(--color-white);
+        }
+        
         /* Hero Actions */
         .hero-actions {
             display: flex;
@@ -1086,7 +1125,12 @@
         
         /* Platform Features Section */
         .platform-section {
-            background-color: var(--color-white);
+            background: linear-gradient(180deg, 
+                var(--color-white) 0%, 
+                var(--color-gray-100) 25%, 
+                var(--color-gray-300) 50%, 
+                var(--color-gray-600) 75%, 
+                var(--color-gray-800) 100%);
             padding: var(--space-128) 0;
             position: relative;
             overflow: hidden;
@@ -1125,7 +1169,18 @@
         .platform-features {
             display: flex;
             flex-direction: column;
-            gap: var(--space-96);
+            gap: 0;
+        }
+        
+        .platform-divider {
+            height: 1px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.3) 20%,
+                rgba(255, 255, 255, 0.3) 80%,
+                transparent 100%
+            );
+            margin: var(--space-48) 0;
         }
         
         .platform-item {
@@ -1198,16 +1253,61 @@
             transition: all var(--transition-base);
         }
         
-        .platform-item:nth-child(2) .platform-name {
-            color: var(--color-gray-900);
+        .platform-item:nth-child(1) {
+            padding: var(--space-96) 0;
+        }
+        
+        .platform-item:nth-child(3) {
+            padding: var(--space-96) 0;
+        }
+        
+        .platform-item:nth-child(5) {
+            padding: var(--space-96) 0;
+        }
+        
+        .platform-item:nth-child(7) {
+            padding: var(--space-96) 0;
+        }
+        
+        /* Progressive color changes */
+        .platform-item:nth-child(1) .platform-name {
+            color: var(--color-black);
+        }
+        
+        .platform-item:nth-child(1) .platform-number,
+        .platform-item:nth-child(1) .platform-description,
+        .platform-item:nth-child(1) .platform-description-typed {
+            color: var(--color-gray-700);
         }
         
         .platform-item:nth-child(3) .platform-name {
             color: var(--color-gray-800);
         }
         
-        .platform-item:nth-child(4) .platform-name {
-            color: var(--color-gray-700);
+        .platform-item:nth-child(3) .platform-number,
+        .platform-item:nth-child(3) .platform-description,
+        .platform-item:nth-child(3) .platform-description-typed {
+            color: var(--color-gray-800);
+        }
+        
+        .platform-item:nth-child(5) .platform-name {
+            color: var(--color-white);
+        }
+        
+        .platform-item:nth-child(5) .platform-number,
+        .platform-item:nth-child(5) .platform-description,
+        .platform-item:nth-child(5) .platform-description-typed {
+            color: var(--color-gray-300);
+        }
+        
+        .platform-item:nth-child(7) .platform-name {
+            color: var(--color-white);
+        }
+        
+        .platform-item:nth-child(7) .platform-number,
+        .platform-item:nth-child(7) .platform-description,
+        .platform-item:nth-child(7) .platform-description-typed {
+            color: var(--color-gray-200);
         }
         
         .platform-item:hover .platform-name {
@@ -1260,6 +1360,148 @@
             .platform-description-typed {
                 font-size: 0.875rem;
             }
+        }
+        
+        /* Investment Form Section */
+        .investment-section {
+            background-color: var(--color-white);
+            padding: var(--space-128) 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .investment-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .investment-header {
+            margin-bottom: var(--space-64);
+        }
+        
+        .investment-header h2 {
+            color: var(--color-black);
+            margin-bottom: var(--space-32);
+        }
+        
+        .investment-intro {
+            color: var(--color-gray-700);
+            font-size: 1.125rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        .investment-form {
+            background-color: var(--color-white);
+            padding: var(--space-48);
+            border: 1px solid var(--color-gray-200);
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-32);
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: var(--space-8);
+            color: var(--color-black);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .required {
+            color: #dc2626;
+            margin-left: 2px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: var(--space-16);
+            border: 1px solid var(--color-gray-300);
+            border-radius: 4px;
+            font-size: 1rem;
+            color: var(--color-black);
+            background-color: var(--color-white);
+            transition: border-color var(--transition-fast);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-black);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-investment-form {
+            background-color: var(--color-black);
+            color: var(--color-white);
+            border: 1px solid var(--color-black);
+            padding: var(--space-16) var(--space-48);
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            margin-top: var(--space-24);
+        }
+        
+        .btn-investment-form:hover {
+            background-color: var(--color-gray-800);
+            border-color: var(--color-gray-800);
+        }
+        
+        /* Thank You Section */
+        .thank-you-section {
+            background-color: var(--color-white);
+            padding: var(--space-128) 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .thank-you-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .thank-you-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--color-black);
+            margin-bottom: var(--space-24);
+            font-weight: 400;
+        }
+        
+        .thank-you-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-gray-600);
+            margin-bottom: var(--space-64);
+        }
+        
+        .return-container {
+            padding-top: var(--space-32);
+            border-top: 1px solid var(--color-gray-200);
+        }
+        
+        .btn-return {
+            background-color: var(--color-black);
+            color: var(--color-white);
+            border: 1px solid var(--color-black);
+            padding: var(--space-16) var(--space-32);
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn-return:hover {
+            background-color: var(--color-gray-800);
+            border-color: var(--color-gray-800);
         }
         
         /* Final CTA */
@@ -1449,7 +1691,7 @@
                     </div>
                     
                     <div class="hero-actions">
-                        <a href="#contact" class="btn btn-primary"><span>Request early access</span></a>
+                        <a href="#investment" class="btn btn-investment"><span>Looking to Invest?</span></a>
                         <a href="#demo" class="btn btn-secondary">Watch 2-min demo</a>
                         <a href="#docs" class="btn btn-text">Private Alpha</a>
                     </div>
@@ -1476,6 +1718,8 @@
                         </div>
                     </div>
                     
+                    <div class="platform-divider"></div>
+                    
                     <div class="platform-item" data-description="Full-spectrum security testing: SQL injection, XSS, CSRF, authentication bypass, privilege escalation, SSRF, and zero-days. Thinks like an attacker but reports like a defender with clear remediation paths.">
                         <div class="platform-meta">
                             <span class="platform-number">/02</span>
@@ -1491,7 +1735,9 @@
                         </div>
                     </div>
                     
-                    <div class="platform-item" data-description="Generates production-ready pull requests with fixes, comprehensive test suites, updated documentation, and detailed commit messages. Every PR includes impact analysis and rollback strategies.">
+                    <div class="platform-divider"></div>
+                    
+                    <div class="platform-item" data-description="Once vulnerabilities and functionality errors are identified, utilizes multi-LLM orchestration to pinpoint and reach consensus regarding the source of issues, then generates production-ready pull requests with fixes, comprehensive test suites, updated documentation, and detailed commit messages. Every PR includes impact analysis and rollback strategies.">
                         <div class="platform-meta">
                             <span class="platform-number">/03</span>
                             <p class="platform-description">
@@ -1505,6 +1751,8 @@
                             <div class="platform-description-typed"><span class="typing-text"></span><span class="typing-cursor"></span></div>
                         </div>
                     </div>
+                    
+                    <div class="platform-divider"></div>
                     
                     <div class="platform-item" data-description="Maximizes context through multi-agent orchestration, MCP protocols, and deep AST/CST analysis. Uses reinforcement learning to train agents native to your team's codebase, understanding your unique patterns, conventions, and architectural decisions. Every run improves the model's understanding of your specific code ecosystem.">
                         <div class="platform-meta">
@@ -1806,12 +2054,75 @@
                     Join our design partner program and shape the future of autonomous security testing.
                 </p>
                 <div class="hero-actions" style="justify-content: center;">
-                    <a href="mailto:srivastavan@berkeley.edu" class="btn btn-primary"><span>Request early access</span></a>
+                    <a href="#investment" class="btn btn-investment"><span>Looking to Invest?</span></a>
                     <a href="tel:+19087395885" class="btn btn-secondary">Schedule a call</a>
                 </div>
                 <p class="caption" style="margin-top: var(--space-24);">
                     srivastavan@berkeley.edu | +1 (908) 739-5885
                 </p>
+            </div>
+        </section>
+        
+        <!-- Investment Interest Form -->
+        <section id="investment" class="investment-section" style="display: none;">
+            <div class="container">
+                <div class="investment-content">
+                    <div class="investment-header">
+                        <h2>Investment Opportunity</h2>
+                        <p class="investment-intro">
+                            Paladin is seeking strategic investors for our upcoming funding round, anticipated within the next 1-2 months. 
+                            We value partnerships and are committed to negotiating all terms collaboratively. In very few cases are we 
+                            willing to accept predetermined terms, as we believe in building mutually beneficial relationships with our investors.
+                        </p>
+                    </div>
+                    
+                    <form id="investment-form" class="investment-form">
+                        <div class="form-group">
+                            <label for="name">Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="title">Title <span class="required">*</span></label>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Company <span class="required">*</span></label>
+                            <input type="text" id="company" name="company" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-investment-form">
+                            <span>Submit Interest</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Thank You Page -->
+        <section id="thank-you" class="thank-you-section" style="display: none;">
+            <div class="container">
+                <div class="thank-you-content">
+                    <h1 class="thank-you-title">Thank you!</h1>
+                    <p class="thank-you-subtitle">Our team will be in touch shortly.</p>
+                    
+                    <div class="return-container">
+                        <button id="return-home" class="btn btn-return">
+                            <span>Return to Paladin</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -1980,6 +2291,126 @@
                 isTyping = false;
                 currentIndex = 0;
             });
+        });
+        
+        // Investment form functionality
+        const investmentButtons = document.querySelectorAll('a[href="#investment"]');
+        const investmentSection = document.getElementById('investment');
+        const thankYouSection = document.getElementById('thank-you');
+        const investmentForm = document.getElementById('investment-form');
+        const returnHomeButton = document.getElementById('return-home');
+        const mainContent = document.querySelector('main');
+        
+        // Supabase configuration
+        const SUPABASE_URL = 'https://gwkdfvrfuzuyikfimbgh.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3a2RmdnJmdXp1eWlrZmltYmdoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxOTgzMjQsImV4cCI6MjA3MDc3NDMyNH0.wNldnWFwO0JWAzQl-FchJx5Nimaf2F6ed2VVsCJKYcg';
+        
+        // Show investment form
+        function showInvestmentForm() {
+            // Hide all other sections
+            document.querySelectorAll('main > section').forEach(section => {
+                if (section.id !== 'investment') {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Show investment section
+            investmentSection.style.display = 'block';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Show thank you page
+        function showThankYouPage() {
+            investmentSection.style.display = 'none';
+            thankYouSection.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Return to home
+        function returnToHome() {
+            // Hide investment and thank you sections
+            investmentSection.style.display = 'none';
+            thankYouSection.style.display = 'none';
+            
+            // Show all other sections
+            document.querySelectorAll('main > section').forEach(section => {
+                if (section.id !== 'investment' && section.id !== 'thank-you') {
+                    section.style.display = 'block';
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Submit form to Supabase
+        async function submitInvestmentForm(formData) {
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/investment_interests`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                return false;
+            }
+        }
+        
+        // Event listeners
+        investmentButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                showInvestmentForm();
+            });
+        });
+        
+        returnHomeButton.addEventListener('click', returnToHome);
+        
+        investmentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(investmentForm);
+            const data = {
+                name: formData.get('name'),
+                title: formData.get('title'),
+                company: formData.get('company'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                submitted_at: new Date().toISOString()
+            };
+            
+            // Disable form during submission
+            const submitButton = investmentForm.querySelector('button[type="submit"]');
+            const originalText = submitButton.querySelector('span').textContent;
+            submitButton.disabled = true;
+            submitButton.querySelector('span').textContent = 'Submitting...';
+            
+            // Submit to Supabase
+            const success = await submitInvestmentForm(data);
+            
+            if (success) {
+                showThankYouPage();
+            } else {
+                // Re-enable form on error
+                submitButton.disabled = false;
+                submitButton.querySelector('span').textContent = originalText;
+                alert('There was an error submitting your form. Please try again.');
+            }
         });
     </script>
 </body>
