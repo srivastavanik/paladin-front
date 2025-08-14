@@ -1922,6 +1922,199 @@
             color: var(--color-gray-300);
         }
         
+        /* Team Section */
+        .team-section {
+            background-color: var(--color-white);
+            min-height: 100vh;
+            padding: var(--space-96) 0;
+            position: relative;
+        }
+        
+        .team-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .team-header {
+            text-align: center;
+            margin-bottom: var(--space-96);
+        }
+        
+        .team-header h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--color-black);
+            margin-bottom: var(--space-24);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+        
+        .team-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .team-grid {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-96);
+            margin-bottom: var(--space-96);
+        }
+        
+        .team-member {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-64);
+            align-items: center;
+            min-height: 500px;
+        }
+        
+        .team-member.nick {
+            background-color: var(--color-white);
+        }
+        
+        .team-member.jackson {
+            background-color: var(--color-black);
+        }
+        
+        .member-image {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .member-info {
+            padding: var(--space-48);
+        }
+        
+        .team-member.nick .member-info {
+            color: var(--color-black);
+        }
+        
+        .team-member.jackson .member-info {
+            color: var(--color-white);
+        }
+        
+        .member-info h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: var(--space-16);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+        
+        .member-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-32);
+            font-weight: 300;
+            opacity: 0.8;
+        }
+        
+        .credentials {
+            margin-bottom: var(--space-48);
+        }
+        
+        .credentials .education {
+            font-size: 1.125rem;
+            font-weight: 400;
+            margin-bottom: var(--space-16);
+        }
+        
+        .credentials .experience {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-32);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: var(--space-16);
+        }
+        
+        .btn-social {
+            padding: var(--space-12) var(--space-24);
+            font-size: 0.875rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            font-weight: 400;
+        }
+        
+        .team-member.nick .btn-social.linkedin {
+            background-color: #0077b5;
+            color: white;
+            border: 1px solid #0077b5;
+        }
+        
+        .team-member.nick .btn-social.twitter {
+            background-color: #1da1f2;
+            color: white;
+            border: 1px solid #1da1f2;
+        }
+        
+        .team-member.jackson .btn-social.linkedin {
+            background-color: #0077b5;
+            color: white;
+            border: 1px solid #0077b5;
+        }
+        
+        .team-member.jackson .btn-social.twitter {
+            background-color: #1da1f2;
+            color: white;
+            border: 1px solid #1da1f2;
+        }
+        
+        .btn-social:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .contact-details p {
+            font-size: 1rem;
+            margin-bottom: var(--space-8);
+            font-family: var(--font-mono);
+        }
+        
+        .team-footer {
+            text-align: center;
+            padding-top: var(--space-64);
+            border-top: 1px solid var(--color-gray-200);
+        }
+        
+        @media (max-width: 968px) {
+            .team-member {
+                grid-template-columns: 1fr;
+                gap: var(--space-32);
+                min-height: auto;
+            }
+            
+            .member-image {
+                height: 400px;
+            }
+            
+            .member-info {
+                padding: var(--space-32);
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+        
         /* Footer */
         .footer {
             background-color: var(--color-black);
@@ -1929,46 +2122,23 @@
             padding: var(--space-96) 0 var(--space-48);
         }
         
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--space-64);
+        .footer-actions {
+            text-align: center;
             margin-bottom: var(--space-64);
         }
         
+        .footer-buttons {
+            display: flex;
+            gap: var(--space-24);
+            justify-content: center;
+            align-items: center;
+        }
+        
         @media (max-width: 768px) {
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--space-48);
+            .footer-buttons {
+                flex-direction: column;
+                gap: var(--space-16);
             }
-        }
-        
-        .footer-section h5 {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--color-gray-500);
-            margin-bottom: var(--space-24);
-            font-weight: 400;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: var(--space-12);
-        }
-        
-        .footer-links a {
-            color: var(--color-gray-400);
-            font-size: 0.875rem;
-            text-decoration: none;
-            transition: color var(--transition-fast);
-        }
-        
-        .footer-links a:hover {
-            color: var(--color-gray-200);
         }
         
         .footer-bottom {
@@ -2598,50 +2768,85 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Team Page -->
+        <section id="team" class="team-section" style="display: none;">
+            <div class="container">
+                <div class="team-content">
+                    <div class="team-header">
+                        <h1>Meet the Team</h1>
+                        <p class="team-subtitle">The founders building the future of autonomous security testing</p>
+                    </div>
+                    
+                    <div class="team-grid">
+                        <!-- Nick S. - Top Left Image, Top Right Info -->
+                        <div class="team-member nick">
+                            <div class="member-image">
+                                <img src="./GPT5-251.jpg" alt="Nick S." />
+                            </div>
+                            <div class="member-info">
+                                <h2>Nick S.</h2>
+                                <h3>Co-Founder & CEO</h3>
+                                <div class="credentials">
+                                    <p class="education">University of California, Berkeley | CS, DS, Economics</p>
+                                    <p class="experience">Technical Researcher @ Mercor<br>Researcher @ Berkeley Artificial Intelligence Research Lab</p>
+                                </div>
+                                <div class="contact-info">
+                                    <div class="social-links">
+                                        <a href="https://www.linkedin.com/in/srivastavan/" class="btn btn-social linkedin" target="_blank">LinkedIn</a>
+                                        <a href="https://x.com/nick_sriv" class="btn btn-social twitter" target="_blank">X</a>
+                                    </div>
+                                    <div class="contact-details">
+                                        <p>srivastavan@berkeley.edu</p>
+                                        <p>+1 (908) 739-5885</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Jackson B. - Bottom Left Info, Bottom Right Image -->
+                        <div class="team-member jackson">
+                            <div class="member-info">
+                                <h2>Jackson B.</h2>
+                                <h3>Co-Founder & CTO</h3>
+                                <div class="credentials">
+                                    <p class="education">Georgia Tech | Computer Science</p>
+                                    <p class="experience">Software Engineering @ Roblox<br>Software Engineering @ Fidelity Investments</p>
+                                </div>
+                                <div class="contact-info">
+                                    <div class="social-links">
+                                        <a href="https://www.linkedin.com/in/jacksonbelanger/" class="btn btn-social linkedin" target="_blank">LinkedIn</a>
+                                        <a href="https://x.com/jacksonbelang" class="btn btn-social twitter" target="_blank">X</a>
+                                    </div>
+                                    <div class="contact-details">
+                                        <p>him@gatech.edu</p>
+                                        <p>+1 (978) 992-7981</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-image">
+                                <img src="./IMG_8471.JPG" alt="Jackson B." />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-footer">
+                        <button id="return-home-team" class="btn btn-primary">
+                            <span>Return to Paladin</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h5>Product</h5>
-                    <ul class="footer-links">
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#docs">Documentation</a></li>
-                        <li><a href="#changelog">Changelog</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h5>Company</h5>
-                    <ul class="footer-links">
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#careers">Careers</a></li>
-                        <li><a href="#blog">Blog</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h5>Legal</h5>
-                    <ul class="footer-links">
-                        <li><a href="#privacy">Privacy Policy</a></li>
-                        <li><a href="#terms">Terms of Service</a></li>
-                        <li><a href="#security">Security</a></li>
-                        <li><a href="#compliance">Compliance</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h5>Resources</h5>
-                    <ul class="footer-links">
-                        <li><a href="#status">System Status</a></li>
-                        <li><a href="#support">Support</a></li>
-                        <li><a href="#community">Community</a></li>
-                        <li><a href="#partners">Partners</a></li>
-                    </ul>
+            <div class="footer-actions">
+                <div class="footer-buttons">
+                    <a href="#investment" class="btn btn-primary">Contact us</a>
+                    <a href="#team" class="btn btn-secondary">Meet the Team</a>
                 </div>
             </div>
             
@@ -2768,10 +2973,13 @@
         
         // Investment form functionality
         const investmentButtons = document.querySelectorAll('a[href="#investment"]');
+        const teamButtons = document.querySelectorAll('a[href="#team"]');
         const investmentSection = document.getElementById('investment');
         const thankYouSection = document.getElementById('thank-you');
+        const teamSection = document.getElementById('team');
         const investmentForm = document.getElementById('investment-form');
         const returnHomeButton = document.getElementById('return-home');
+        const returnHomeTeamButton = document.getElementById('return-home-team');
         const mainContent = document.querySelector('main');
         
         // Supabase configuration - will be replaced during build/deployment
@@ -2802,6 +3010,22 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
+        // Show team page
+        function showTeamPage() {
+            // Hide all other sections
+            document.querySelectorAll('main > section').forEach(section => {
+                if (section.id !== 'team') {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Show team section
+            teamSection.style.display = 'block';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
         // Show thank you page
         function showThankYouPage() {
             investmentSection.style.display = 'none';
@@ -2811,13 +3035,14 @@
         
         // Return to home
         function returnToHome() {
-            // Hide investment and thank you sections
+            // Hide investment, thank you, and team sections
             investmentSection.style.display = 'none';
             thankYouSection.style.display = 'none';
+            teamSection.style.display = 'none';
             
             // Show all other sections
             document.querySelectorAll('main > section').forEach(section => {
-                if (section.id !== 'investment' && section.id !== 'thank-you') {
+                if (section.id !== 'investment' && section.id !== 'thank-you' && section.id !== 'team') {
                     section.style.display = 'block';
                 }
             });
@@ -2884,7 +3109,15 @@
             });
         });
         
+        teamButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                showTeamPage();
+            });
+        });
+        
         returnHomeButton.addEventListener('click', returnToHome);
+        returnHomeTeamButton.addEventListener('click', returnToHome);
         
         investmentForm.addEventListener('submit', async (e) => {
             e.preventDefault();
