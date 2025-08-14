@@ -115,11 +115,13 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle, transparent 1px, rgba(255,255,255,0.02) 1px);
-            background-size: 4px 4px;
+                radial-gradient(circle, transparent 1px, rgba(255,255,255,0.08) 1px),
+                radial-gradient(circle, transparent 1px, rgba(0,0,0,0.15) 1px);
+            background-size: 3px 3px, 6px 6px;
+            background-position: 0 0, 2px 2px;
             pointer-events: none;
             z-index: 1000;
-            opacity: 0.5;
+            opacity: 0.8;
             mix-blend-mode: overlay;
         }
         
@@ -203,15 +205,16 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background-color: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid var(--color-gray-800);
+            background-color: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(24px) saturate(200%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
         }
         
         .nav-container {
             max-width: var(--grid-max-width);
             margin: 0 auto;
-            padding: var(--space-16) var(--grid-margin);
+            padding: var(--space-24) var(--grid-margin);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -307,7 +310,7 @@
             overflow-y: hidden;
             background: linear-gradient(135deg, var(--color-gray-950) 0%, var(--color-gray-900) 50%, var(--color-black) 100%);
             perspective: 1000px;
-            padding-top: 64px;
+            padding-top: 80px;
         }
         
         /* Grainy Filter Overlay */
@@ -319,13 +322,14 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(circle, transparent 1px, rgba(255,255,255,0.05) 1px),
-                radial-gradient(circle, transparent 1px, rgba(0,0,0,0.1) 1px);
-            background-size: 3px 3px, 5px 5px;
-            background-position: 0 0, 2px 2px;
+                radial-gradient(circle, transparent 1px, rgba(255,255,255,0.12) 1px),
+                radial-gradient(circle, transparent 1px, rgba(0,0,0,0.2) 1px),
+                radial-gradient(circle, transparent 0.5px, rgba(255,255,255,0.05) 0.5px);
+            background-size: 2px 2px, 4px 4px, 1px 1px;
+            background-position: 0 0, 2px 2px, 1px 1px;
             pointer-events: none;
             z-index: 3;
-            opacity: 0.3;
+            opacity: 0.7;
             mix-blend-mode: overlay;
         }
         
@@ -1176,13 +1180,34 @@
             overflow: hidden;
         }
         
+        /* Platform Section Grain Effect */
         .platform-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle, transparent 1px, rgba(0,0,0,0.08) 1px),
+                radial-gradient(circle, transparent 1px, rgba(255,255,255,0.04) 1px),
+                radial-gradient(circle, transparent 0.5px, rgba(0,0,0,0.03) 0.5px);
+            background-size: 3px 3px, 5px 5px, 1px 1px;
+            background-position: 0 0, 2px 2px, 1px 1px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+            mix-blend-mode: overlay;
+        }
+        
+        .platform-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
             height: 1px;
+            z-index: 2;
             background: linear-gradient(90deg,
                 transparent 0%,
                 var(--color-gray-300) 20%,
@@ -1821,7 +1846,7 @@
             }
             
             .hero {
-                padding-top: 80px;
+                padding-top: 96px;
             }
             
             .hero-content {
