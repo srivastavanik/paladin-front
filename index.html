@@ -247,10 +247,6 @@
             position: relative;
         }
         
-        .team-page .nav-links a {
-            color: var(--color-gray-800);
-        }
-        
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -265,10 +261,6 @@
         
         .nav-links a:hover {
             color: var(--color-white);
-        }
-        
-        .team-page .nav-links a:hover {
-            color: var(--color-black);
         }
         
         .nav-links a:hover::after {
@@ -299,6 +291,69 @@
         .section {
             padding: var(--space-96) 0;
             position: relative;
+        }
+        
+        /* Team Page Mobile Styles */
+        @media (max-width: 768px) {
+            .team-header h1 {
+                font-size: 2rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+                height: auto;
+            }
+            
+            .team-member {
+                padding: var(--space-32);
+            }
+            
+            .team-member.image-section {
+                height: 300px;
+                padding: 0;
+            }
+            
+            .member-header h2 {
+                font-size: 2rem;
+            }
+            
+            .social-links {
+                flex-direction: column;
+                gap: var(--space-12);
+            }
+            
+            .btn-social {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .footer-buttons {
+                flex-direction: column;
+                gap: var(--space-16);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .team-header {
+                padding: var(--space-32) var(--space-16);
+            }
+            
+            .team-header h1 {
+                font-size: 1.75rem;
+            }
+            
+            .team-member {
+                padding: var(--space-24) var(--space-16);
+            }
+            
+            .member-header h2 {
+                font-size: 1.75rem;
+            }
+            
+            .member-title {
+                font-size: 1rem;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1930,46 +1985,34 @@
             color: var(--color-gray-300);
         }
         
-        /* Team Section */
+        /* Team Page Styles */
         .team-section {
-            background-color: var(--color-white);
-            min-height: 100vh;
             padding: 0;
-            position: relative;
             width: 100vw;
             margin-left: calc(-50vw + 50%);
+            background-color: var(--color-white);
+            color: var(--color-black);
         }
         
         .team-content {
-            max-width: 100%;
-            margin: 0;
-            width: 100%;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
         
         .team-header {
-            text-align: center;
             padding: var(--space-48) 0;
             background-color: var(--color-gray-100);
+            text-align: center;
+            border-bottom: 1px solid var(--color-gray-200);
         }
         
         .team-header h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-family: var(--font-sans);
+            font-size: 3rem;
+            font-weight: 700;
             color: var(--color-black);
-            margin-bottom: var(--space-24);
-            font-weight: 400;
-            letter-spacing: -0.02em;
-            font-family: var(--font-sans);
-        }
-        
-        .team-subtitle {
-            font-size: 1.25rem;
-            color: var(--color-gray-600);
-            max-width: 600px;
-            margin: 0 auto;
-            font-family: var(--font-sans);
+            margin: 0;
         }
         
         .team-grid {
@@ -1977,7 +2020,6 @@
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             height: calc(100vh - 150px);
-            gap: 0;
             flex: 1;
         }
         
@@ -1985,148 +2027,174 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            min-height: 50vh;
-        }
-        
-        .team-member.nick {
-            grid-column: 1 / 3;
-            grid-row: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-        
-        .team-member.jackson {
-            grid-column: 1 / 3;
-            grid-row: 2;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            padding: var(--space-48);
+            font-family: var(--font-sans);
         }
         
         .team-member.nick {
             background-color: var(--color-white);
+            color: var(--color-black);
         }
         
         .team-member.jackson {
             background-color: var(--color-black);
+            color: var(--color-white);
+        }
+        
+        .team-member.image-section {
+            padding: 0;
         }
         
         .member-image {
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .member-image img {
-            width: 100%;
-            height: 100%;
             object-fit: cover;
-            object-position: center;
         }
         
-        .team-member.nick .member-image img {
+        .team-member.nick .member-image {
             object-position: 85% center;
         }
         
         .member-info {
-            padding: var(--space-64);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-        }
-        
-        .team-member.nick .member-info {
-            color: var(--color-black);
-        }
-        
-        .team-member.jackson .member-info {
-            color: var(--color-white);
+            width: 100%;
+            max-width: 400px;
         }
         
         .member-header {
             cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-        
-        .member-header:hover {
-            transform: translateX(5px);
-        }
-        
-        .member-info h2 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            margin-bottom: var(--space-16);
-            font-weight: 400;
-            letter-spacing: -0.02em;
-            font-family: var(--font-sans);
             display: flex;
             align-items: center;
-            gap: var(--space-16);
+            justify-content: space-between;
+            margin-bottom: var(--space-24);
+            padding-bottom: var(--space-12);
+            border-bottom: 2px solid currentColor;
+        }
+        
+        .member-header h2 {
+            font-family: var(--font-sans);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
         }
         
         .expand-arrow {
-            font-size: 2rem;
-            transition: transform var(--transition-base);
-            display: inline-block;
-        }
-        
-        .expand-arrow.expanded {
-            transform: rotate(90deg);
-        }
-        
-        .member-info h3 {
             font-size: 1.5rem;
+            transition: transform var(--transition-fast);
+        }
+        
+        .member-header.expanded .expand-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .member-title {
+            font-size: 1.25rem;
+            font-weight: 500;
             margin-bottom: var(--space-32);
-            font-weight: 300;
             opacity: 0.8;
-            font-family: var(--font-sans);
         }
         
         .credentials {
-            margin-bottom: var(--space-48);
-            opacity: 0;
             max-height: 0;
             overflow: hidden;
-            transition: all var(--transition-slow);
+            transition: max-height 0.3s ease-out;
+            margin-bottom: var(--space-32);
         }
         
         .credentials.expanded {
-            opacity: 1;
-            max-height: 1000px;
-            animation: fadeInUp 1s ease-out forwards;
+            max-height: 200px;
         }
         
-        .credentials .education {
-            font-size: 1.125rem;
-            font-weight: 400;
+        .credential-item {
             margin-bottom: var(--space-16);
-            font-family: var(--font-sans);
-            opacity: 0;
-            animation: typeIn 1s ease-out 0.3s forwards;
-        }
-        
-        .credentials .experience {
-            font-size: 1rem;
             line-height: 1.6;
-            opacity: 0;
+        }
+        
+        .credential-item strong {
+            display: block;
+            margin-bottom: var(--space-4);
+            font-weight: 600;
+        }
+        
+        .typing-text {
+            display: inline;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: var(--space-16);
+            margin-bottom: var(--space-32);
+        }
+        
+        .btn-social {
+            padding: var(--space-12) var(--space-24);
+            border: 2px solid currentColor;
+            background: transparent;
+            color: inherit;
+            text-decoration: none;
             font-family: var(--font-sans);
-            animation: typeIn 1s ease-out 0.6s forwards;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-radius: 6px;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
         }
         
-        .typing-animation {
-            overflow: hidden;
-            white-space: nowrap;
-            animation: typing 2s steps(40, end) 0.5s forwards;
+        .team-member.nick .btn-social:hover {
+            background-color: var(--color-black);
+            color: var(--color-white);
         }
         
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+        .team-member.jackson .btn-social:hover {
+            background-color: var(--color-white);
+            color: var(--color-black);
         }
         
+        .contact-details {
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+        
+        .contact-details p {
+            margin: var(--space-8) 0;
+        }
+        
+        .team-footer {
+            padding: var(--space-32) 0;
+            text-align: center;
+            background-color: var(--color-gray-100);
+            border-top: 1px solid var(--color-gray-200);
+        }
+        
+        .btn-return {
+            font-family: var(--font-sans);
+            font-weight: 500;
+            padding: var(--space-16) var(--space-32);
+            background-color: var(--color-black);
+            color: var(--color-white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn-return:hover {
+            background-color: var(--color-gray-800);
+            transform: translateY(-2px);
+        }
+        
+        /* Navigation bar styling for team page */
+        body.team-page .nav-links a {
+            color: var(--color-gray-800);
+        }
+        
+        body.team-page .nav-links a:hover {
+            color: var(--color-black);
+        }
+        
+        /* Animation keyframes */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -2139,121 +2207,22 @@
         }
         
         @keyframes popIn {
-            0% {
+            from {
                 opacity: 0;
-                transform: scale(0.8) translateY(20px);
+                transform: scale(0.8);
             }
-            100% {
+            to {
                 opacity: 1;
-                transform: scale(1) translateY(0);
+                transform: scale(1);
             }
         }
         
         @keyframes typeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
+            from {
+                width: 0;
             }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-32);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: var(--space-16);
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 1s forwards;
-        }
-        
-        .btn-social {
-            padding: var(--space-12) var(--space-24);
-            font-size: 0.875rem;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: all var(--transition-fast);
-            font-weight: 400;
-            font-family: var(--font-sans);
-        }
-        
-        .team-member.nick .btn-social.linkedin {
-            background-color: var(--color-black);
-            color: var(--color-white);
-            border: 1px solid var(--color-black);
-        }
-        
-        .team-member.nick .btn-social.twitter {
-            background-color: var(--color-white);
-            color: var(--color-black);
-            border: 1px solid var(--color-black);
-        }
-        
-        .team-member.jackson .btn-social.linkedin {
-            background-color: var(--color-white);
-            color: var(--color-black);
-            border: 1px solid var(--color-white);
-        }
-        
-        .team-member.jackson .btn-social.twitter {
-            background-color: var(--color-black);
-            color: var(--color-white);
-            border: 1px solid var(--color-white);
-        }
-        
-        .btn-social:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .contact-details {
-            margin-top: var(--space-16);
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out 1.3s forwards;
-        }
-        
-        .contact-details p {
-            font-size: 1rem;
-            margin-bottom: var(--space-8);
-            font-family: var(--font-sans);
-        }
-        
-        .team-footer {
-            text-align: center;
-            padding: var(--space-32);
-            background-color: var(--color-gray-100);
-            width: 100%;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .team-footer .btn {
-            font-family: var(--font-sans);
-        }
-        
-        @media (max-width: 968px) {
-            .team-member {
-                grid-template-columns: 1fr;
-                gap: var(--space-32);
-                min-height: auto;
-            }
-            
-            .member-image {
-                height: 400px;
-            }
-            
-            .member-info {
-                padding: var(--space-32);
-            }
-            
-            .social-links {
-                justify-content: center;
+            to {
+                width: 100%;
             }
         }
         
@@ -2264,7 +2233,59 @@
             padding: var(--space-96) 0 var(--space-48);
         }
         
-
+        .footer-actions {
+            text-align: center;
+            margin-bottom: var(--space-48);
+        }
+        
+        .footer-buttons {
+            display: flex;
+            gap: var(--space-24);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-64);
+            margin-bottom: var(--space-64);
+        }
+        
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-48);
+            }
+        }
+        
+        .footer-section h5 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gray-500);
+            margin-bottom: var(--space-24);
+            font-weight: 400;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--space-12);
+        }
+        
+        .footer-links a {
+            color: var(--color-gray-400);
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-gray-200);
+        }
         
         .footer-bottom {
             padding-top: var(--space-48);
@@ -2289,19 +2310,6 @@
                 --grid-margin: 24px;
             }
             
-            /* Navigation */
-            .nav {
-                padding: var(--space-16) 0;
-            }
-            
-            .nav-container {
-                padding: var(--space-16) var(--space-24);
-            }
-            
-            .logo img {
-                height: 32px;
-            }
-            
             .nav-links {
                 display: none;
             }
@@ -2310,433 +2318,22 @@
                 display: block;
             }
             
-            /* Hero Section */
-            .hero {
-                padding-top: 96px;
-                min-height: 100vh;
-            }
-            
-            .hero-content {
-                margin-top: var(--space-32);
-                text-align: center;
-                padding: 0 var(--space-16);
-            }
-            
-            .hero-title {
-                font-size: 2.5rem;
-                line-height: 1.2;
-                margin-bottom: var(--space-24);
-            }
-            
-            .hero-subtitle {
-                font-size: 1.125rem;
-                margin-bottom: var(--space-32);
-                line-height: 1.6;
-            }
-            
             .hero-actions {
                 flex-direction: column;
-                align-items: center;
-                gap: var(--space-16);
-                width: 100%;
-            }
-            
-            .btn {
-                width: 100%;
-                max-width: 280px;
-                padding: var(--space-16) var(--space-24);
-                font-size: 1rem;
-                text-align: center;
+                align-items: flex-start;
             }
             
             .trust-indicators {
                 flex-direction: column;
                 gap: var(--space-16);
-                text-align: center;
+            }
+            
+            .hero {
+                padding-top: 96px;
+            }
+            
+            .hero-content {
                 margin-top: var(--space-32);
-            }
-            
-            /* Platform Sections */
-            .platform-section {
-                padding: var(--space-48) var(--space-16);
-            }
-            
-            .platform-features {
-                grid-template-columns: 1fr;
-                gap: var(--space-24);
-            }
-            
-            .platform-item {
-                padding: var(--space-24);
-                text-align: center;
-            }
-            
-            .platform-item h3 {
-                font-size: 1.5rem;
-                margin-bottom: var(--space-16);
-            }
-            
-            .platform-item p {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-            
-            /* Scope Section */
-            .scope-section {
-                padding: var(--space-48) var(--space-16);
-            }
-            
-            .scope-content h2 {
-                font-size: 2rem;
-                text-align: center;
-                margin-bottom: var(--space-32);
-            }
-            
-            .scope-list {
-                padding-left: var(--space-20);
-            }
-            
-            .scope-list li {
-                margin-bottom: var(--space-16);
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-            
-            /* Steps Grid */
-            .steps-grid {
-                grid-template-columns: 1fr;
-                gap: var(--space-32);
-            }
-            
-            .step {
-                text-align: center;
-                padding: var(--space-24);
-            }
-            
-            .step-number {
-                font-size: 2rem;
-                margin-bottom: var(--space-16);
-            }
-            
-            .step h3 {
-                font-size: 1.25rem;
-                margin-bottom: var(--space-16);
-            }
-            
-            /* Investment Form */
-            .investment-header h1 {
-                font-size: 2rem;
-                text-align: center;
-                margin-bottom: var(--space-24);
-            }
-            
-            .investment-intro {
-                text-align: center;
-                margin-bottom: var(--space-32);
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-            
-            .form-field {
-                margin-bottom: var(--space-20);
-            }
-            
-            .field-question {
-                font-size: 1rem;
-                margin-bottom: var(--space-12);
-            }
-            
-            .field-input {
-                padding: var(--space-16);
-                font-size: 1rem;
-                width: 100%;
-            }
-            
-            .submit-section {
-                text-align: center;
-                margin-top: var(--space-32);
-            }
-            
-            /* Thank You Page */
-            .thank-you-section {
-                padding: var(--space-64) var(--space-16);
-                text-align: center;
-            }
-            
-            .thank-you-title {
-                font-size: 2.5rem;
-                margin-bottom: var(--space-24);
-            }
-            
-            .thank-you-subtitle {
-                font-size: 1.125rem;
-                margin-bottom: var(--space-32);
-                line-height: 1.6;
-            }
-            
-            /* Team Page Mobile */
-            .team-section {
-                margin-left: 0;
-                width: 100%;
-            }
-            
-            .team-content {
-                min-height: auto;
-            }
-            
-            .team-header {
-                padding: var(--space-32) var(--space-16);
-                text-align: center;
-            }
-            
-            .team-header h1 {
-                font-size: 2rem;
-                margin-bottom: var(--space-16);
-            }
-            
-            .team-subtitle {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-            
-            .team-grid {
-                display: block;
-                height: auto;
-            }
-            
-            .team-member {
-                display: block;
-                margin-bottom: var(--space-32);
-                background-color: var(--color-white);
-                color: var(--color-black);
-            }
-            
-            .team-member.nick,
-            .team-member.jackson {
-                background-color: var(--color-white);
-                color: var(--color-black);
-            }
-            
-            .member-image {
-                width: 100%;
-                height: 250px;
-                margin-bottom: var(--space-16);
-            }
-            
-            .member-info {
-                padding: var(--space-24) var(--space-16);
-                height: auto;
-            }
-            
-            .member-header h2 {
-                font-size: 1.5rem;
-                margin-bottom: var(--space-8);
-            }
-            
-            .member-header h3 {
-                font-size: 1rem;
-                margin-bottom: var(--space-16);
-                opacity: 0.8;
-            }
-            
-            .credentials {
-                margin-top: var(--space-16);
-            }
-            
-            .education,
-            .experience {
-                font-size: 0.9rem;
-                line-height: 1.5;
-                margin-bottom: var(--space-12);
-            }
-            
-            .social-links {
-                flex-direction: column;
-                gap: var(--space-12);
-                margin-bottom: var(--space-16);
-                align-items: flex-start;
-            }
-            
-            .btn-social {
-                width: 100%;
-                max-width: 200px;
-                padding: var(--space-12) var(--space-16);
-                font-size: 0.9rem;
-            }
-            
-            .contact-details p {
-                font-size: 0.9rem;
-                margin-bottom: var(--space-8);
-            }
-            
-            .team-footer {
-                padding: var(--space-32) var(--space-16);
-                text-align: center;
-            }
-            
-            /* Footer */
-            .footer {
-                padding: var(--space-32) var(--space-16);
-                text-align: center;
-            }
-            
-            /* General Typography */
-            .container {
-                padding: 0 var(--space-16);
-            }
-            
-            .section {
-                padding: var(--space-48) 0;
-            }
-            
-            h1 {
-                font-size: 2rem;
-                line-height: 1.2;
-            }
-            
-            h2 {
-                font-size: 1.75rem;
-                line-height: 1.3;
-            }
-            
-            h3 {
-                font-size: 1.25rem;
-                line-height: 1.4;
-            }
-            
-            .body-large {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-            
-            /* Video responsiveness */
-            .hero-video {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            
-            /* Button improvements */
-            .btn-investment span {
-                display: block;
-                width: 100%;
-            }
-            
-            .btn-secondary span {
-                display: block;
-                width: 100%;
-            }
-        }
-        
-        /* Tablet Responsive Styles */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .hero-title {
-                font-size: 3rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.25rem;
-            }
-            
-            .platform-features {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--space-32);
-            }
-            
-            .steps-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--space-32);
-            }
-            
-            .rl-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--space-24);
-            }
-            
-            .team-grid {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto;
-                height: auto;
-            }
-            
-            .team-member {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: var(--space-32);
-                margin-bottom: var(--space-48);
-            }
-            
-            .team-member.nick {
-                grid-template-areas: "image info";
-            }
-            
-            .team-member.jackson {
-                grid-template-areas: "info image";
-            }
-            
-            .team-member.nick .member-image {
-                grid-area: image;
-            }
-            
-            .team-member.nick .member-info {
-                grid-area: info;
-            }
-            
-            .team-member.jackson .member-image {
-                grid-area: image;
-            }
-            
-            .team-member.jackson .member-info {
-                grid-area: info;
-            }
-        }
-        
-        /* Small Mobile Devices */
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-            
-            .btn {
-                max-width: 100%;
-                padding: var(--space-14) var(--space-20);
-                font-size: 0.9rem;
-            }
-            
-            .platform-item {
-                padding: var(--space-20);
-            }
-            
-            .platform-item h3 {
-                font-size: 1.25rem;
-            }
-            
-            .scope-content h2 {
-                font-size: 1.75rem;
-            }
-            
-            .investment-header h1 {
-                font-size: 1.75rem;
-            }
-            
-            .thank-you-title {
-                font-size: 2rem;
-            }
-            
-            .team-header h1 {
-                font-size: 1.75rem;
-            }
-            
-            .member-image {
-                height: 200px;
-            }
-            
-            .member-header h2 {
-                font-size: 1.25rem;
             }
         }
         
@@ -2805,8 +2402,7 @@
                     
                     <div class="hero-actions">
                         <a href="#investment" class="btn btn-investment"><span>Looking to Invest?</span></a>
-                        <a href="#team" class="btn btn-secondary">Meet the Team</a>
-                        <a href="#docs" class="btn btn-text">Private Alpha</a>
+                        <button onclick="showTeamPage()" class="btn btn-secondary">Meet the Team</button>
                     </div>
                 </div>
             </div>
@@ -3240,15 +2836,15 @@
                     Join our design partner program and shape the future of autonomous security testing.
                 </p>
                 <div class="hero-actions" style="justify-content: center;">
-                    <a href="#investment" class="btn btn-investment"><span>Contact us</span></a>
-                    <a href="#team" class="btn btn-secondary">Meet the Team</a>
+                    <a href="#investment" class="btn btn-investment">Contact us</a>
+                    <button onclick="showTeamPage()" class="btn btn-secondary">Meet the Team</button>
                 </div>
             </div>
         </section>
-        
+    
         <!-- Investment Interest Form -->
         <section id="investment" class="investment-section" style="display: none;">
-            <div class="container">
+        <div class="container">
                 <div class="investment-content">
                     <div class="investment-header">
                         <h2>Investment Opportunity</h2>
@@ -3257,21 +2853,21 @@
                             We value partnerships and are committed to negotiating all terms collaboratively. In very few cases are we 
                             willing to accept predetermined terms, as we believe in building mutually beneficial relationships with our investors.
                         </p>
-                    </div>
-                    
+                </div>
+                
                     <form id="investment-form" class="investment-form">
                         <div class="form-field">
                             <div class="field-number">1→</div>
                             <div class="field-question">What is your name?<span class="required">*</span></div>
                             <input type="text" id="name" name="name" class="field-input" placeholder="Type your answer here..." required>
-                        </div>
-                        
+                </div>
+                
                         <div class="form-field">
                             <div class="field-number">2→</div>
                             <div class="field-question">What is your title?<span class="required">*</span></div>
                             <input type="text" id="title" name="title" class="field-input" placeholder="Type your answer here..." required>
-                        </div>
-                        
+                </div>
+                
                         <div class="form-field">
                             <div class="field-number">3→</div>
                             <div class="field-question">What company do you represent?<span class="required">*</span></div>
@@ -3315,85 +2911,117 @@
                 </div>
             </div>
         </section>
-        
-        <!-- Team Page -->
-        <section id="team" class="team-section" style="display: none;">
-            <div class="container">
-                <div class="team-content">
-                    <div class="team-header">
-                        <h1>Meet the Team</h1>
-                        <p class="team-subtitle">The founders building the future of autonomous security testing</p>
-                    </div>
-                    
-                    <div class="team-grid">
-                        <!-- Nick S. - Top Left Image, Top Right Info -->
-                        <div class="team-member nick">
-                            <div class="member-image">
-                                <img src="./nick.jpg" alt="Nick S." />
-                            </div>
-                            <div class="member-info">
-                                <div class="member-header" onclick="toggleCredentials('nick')">
-                                    <h2>Nick S. <span class="expand-arrow" id="nick-arrow">→</span></h2>
-                                    <h3>Co-Founder & CEO</h3>
-                                </div>
-                                <div class="credentials typing-animation" id="nick-credentials" style="display: none;">
-                                    <p class="education">University of California, Berkeley | CS, DS, Economics</p>
-                                    <p class="experience">Technical Researcher @ Mercor<br>Researcher @ Berkeley Artificial Intelligence Research Lab</p>
-                                    <div class="contact-info">
-                                        <div class="social-links">
-                                            <a href="https://www.linkedin.com/in/srivastavan/" class="btn btn-social linkedin" target="_blank">LinkedIn</a>
-                                            <a href="https://x.com/nick_sriv" class="btn btn-social twitter" target="_blank">X</a>
-                                        </div>
-                                        <div class="contact-details">
-                                            <p>srivastavan@berkeley.edu</p>
-                                            <p>+1 (908) 739-5885</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                </div>
-                
-                        <!-- Jackson B. - Bottom Left Info, Bottom Right Image -->
-                        <div class="team-member jackson">
-                            <div class="member-info">
-                                <div class="member-header" onclick="toggleCredentials('jackson')">
-                                    <h2>Jackson B. <span class="expand-arrow" id="jackson-arrow">→</span></h2>
-                                    <h3>Co-Founder & CTO</h3>
-                                </div>
-                                <div class="credentials typing-animation" id="jackson-credentials" style="display: none;">
-                                    <p class="education">Georgia Tech | Computer Science</p>
-                                    <p class="experience">Software Engineering @ Roblox<br>Software Engineering @ Fidelity Investments</p>
-                                    <div class="contact-info">
-                                        <div class="social-links">
-                                            <a href="https://www.linkedin.com/in/jacksonbelanger/" class="btn btn-social linkedin" target="_blank">LinkedIn</a>
-                                            <a href="https://x.com/jacksonbelang" class="btn btn-social twitter" target="_blank">X</a>
-                                        </div>
-                                        <div class="contact-details">
-                                            <p>him@gatech.edu</p>
-                                            <p>+1 (978) 992-7981</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="member-image">
-                                <img src="./jackson.jpg" alt="Jackson B." />
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="team-footer">
-                        <button id="return-home-team" class="btn btn-primary">
-                            <span>Return to Paladin</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
     
+    <!-- Team Page -->
+    <section id="team" class="team-section" style="display: none;">
+        <div class="team-content">
+            <div class="team-header">
+                <h1>Meet the Team</h1>
+                </div>
+                
+            <div class="team-grid">
+                <!-- Nick's Image (Top Left) -->
+                <div class="team-member nick image-section">
+                    <img src="./nick.jpg" alt="Nick S." class="member-image">
+                </div>
+                
+                <!-- Nick's Info (Top Right) -->
+                <div class="team-member nick info-section">
+                    <div class="member-info">
+                        <div class="member-header" onclick="toggleCredentials('nick')">
+                            <h2>Nick S.</h2>
+                            <span class="expand-arrow">↓</span>
+                        </div>
+                        <p class="member-title">Co-Founder & CEO</p>
+                        
+                        <div class="credentials" id="nick-credentials">
+                            <div class="credential-item">
+                                <strong>Education:</strong>
+                                <span class="typing-text">University of California, Berkeley | CS, DS, Economics</span>
+                            </div>
+                            <div class="credential-item">
+                                <strong>Experience:</strong>
+                                <span class="typing-text">Technical Researcher @ Mercor, Researcher @ Berkeley Artificial Intelligence Research Lab</span>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/srivastavan/" target="_blank" class="btn-social linkedin">
+                                LinkedIn
+                            </a>
+                            <a href="https://x.com/nick_sriv" target="_blank" class="btn-social twitter">
+                                X
+                            </a>
+                        </div>
+                        
+                        <div class="contact-details">
+                            <p>srivastavan@berkeley.edu</p>
+                            <p>+1 (908) 739-5885</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Jackson's Info (Bottom Left) -->
+                <div class="team-member jackson info-section">
+                    <div class="member-info">
+                        <div class="member-header" onclick="toggleCredentials('jackson')">
+                            <h2>Jackson B.</h2>
+                            <span class="expand-arrow">↓</span>
+                        </div>
+                        <p class="member-title">Co-Founder & CTO</p>
+                        
+                        <div class="credentials" id="jackson-credentials">
+                            <div class="credential-item">
+                                <strong>Education:</strong>
+                                <span class="typing-text">Georgia Tech | Computer Science</span>
+                            </div>
+                            <div class="credential-item">
+                                <strong>Experience:</strong>
+                                <span class="typing-text">Software Engineering @ Roblox, Software Engineering @ Fidelity Investments</span>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/jacksonbelanger/" target="_blank" class="btn-social linkedin">
+                                LinkedIn
+                            </a>
+                            <a href="https://x.com/jacksonbelang" target="_blank" class="btn-social twitter">
+                                X
+                            </a>
+                        </div>
+                        
+                        <div class="contact-details">
+                            <p>him@gatech.edu</p>
+                            <p>+1 (978) 992-7981</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Jackson's Image (Bottom Right) -->
+                <div class="team-member jackson image-section">
+                    <img src="./jackson.jpg" alt="Jackson B." class="member-image">
+                </div>
+            </div>
+            
+            <div class="team-footer">
+                <button onclick="returnToHome()" class="btn btn-return">
+                    <span>Return to Paladin</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="container">
+            <div class="footer-actions">
+                <div class="footer-buttons">
+                    <a href="#investment" class="btn btn-investment">Contact us</a>
+                    <button onclick="showTeamPage()" class="btn btn-secondary">Meet the Team</button>
+                </div>
+            </div>
+            
             <div class="footer-bottom">
                 <p>&copy; 2025 Paladin. Autonomous full-stack security testing.</p>
             </div>
@@ -3517,13 +3145,10 @@
         
         // Investment form functionality
         const investmentButtons = document.querySelectorAll('a[href="#investment"]');
-        const teamButtons = document.querySelectorAll('a[href="#team"]');
         const investmentSection = document.getElementById('investment');
         const thankYouSection = document.getElementById('thank-you');
-        const teamSection = document.getElementById('team');
         const investmentForm = document.getElementById('investment-form');
         const returnHomeButton = document.getElementById('return-home');
-        const returnHomeTeamButton = document.getElementById('return-home-team');
         const mainContent = document.querySelector('main');
         
         // Supabase configuration - will be replaced during build/deployment
@@ -3554,25 +3179,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // Show team page
-        function showTeamPage() {
-            // Hide all other sections
-            document.querySelectorAll('main > section').forEach(section => {
-                if (section.id !== 'team') {
-                    section.style.display = 'none';
-                }
-            });
-            
-            // Show team section
-            teamSection.style.display = 'block';
-            
-            // Add team-page class to body for navigation styling
-            document.body.classList.add('team-page');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
         // Show thank you page
         function showThankYouPage() {
             investmentSection.style.display = 'none';
@@ -3582,17 +3188,13 @@
         
         // Return to home
         function returnToHome() {
-            // Hide investment, thank you, and team sections
+            // Hide investment and thank you sections
             investmentSection.style.display = 'none';
             thankYouSection.style.display = 'none';
-            teamSection.style.display = 'none';
-            
-            // Remove team-page class from body
-            document.body.classList.remove('team-page');
             
             // Show all other sections
             document.querySelectorAll('main > section').forEach(section => {
-                if (section.id !== 'investment' && section.id !== 'thank-you' && section.id !== 'team') {
+                if (section.id !== 'investment' && section.id !== 'thank-you') {
                     section.style.display = 'block';
                 }
             });
@@ -3642,6 +3244,90 @@
             }
         }
         
+        // Team page functionality
+        function showTeamPage() {
+            // Hide all other sections
+            document.querySelectorAll('main > section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show team section
+            const teamSection = document.getElementById('team');
+            teamSection.style.display = 'block';
+            
+            // Add team page class to body for navigation styling
+            document.body.classList.add('team-page');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function toggleCredentials(member) {
+            const credentials = document.getElementById(`${member}-credentials`);
+            const header = credentials.previousElementSibling.previousElementSibling;
+            const arrow = header.querySelector('.expand-arrow');
+            
+            if (credentials.classList.contains('expanded')) {
+                credentials.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                credentials.classList.add('expanded');
+                header.classList.add('expanded');
+                
+                // Typing animation for credentials
+                const typingTexts = credentials.querySelectorAll('.typing-text');
+                typingTexts.forEach((text, index) => {
+                    const originalText = text.textContent;
+                    text.textContent = '';
+                    
+                    setTimeout(() => {
+                        let i = 0;
+                        const typeInterval = setInterval(() => {
+                            if (i < originalText.length) {
+                                text.textContent += originalText.charAt(i);
+                                i++;
+                            } else {
+                                clearInterval(typeInterval);
+                            }
+                        }, 20);
+                    }, index * 200);
+                });
+                
+                // Pop-in animation for social buttons
+                const socialLinks = credentials.parentElement.querySelector('.social-links');
+                if (socialLinks) {
+                    setTimeout(() => {
+                        socialLinks.style.animation = 'popIn 0.3s ease-out forwards';
+                    }, 500);
+                }
+            }
+        }
+        
+        // Update returnToHome function to handle team page
+        function returnToHome() {
+            // Hide investment, thank you, and team sections
+            const investmentSection = document.getElementById('investment');
+            const thankYouSection = document.getElementById('thank-you');
+            const teamSection = document.getElementById('team');
+            
+            if (investmentSection) investmentSection.style.display = 'none';
+            if (thankYouSection) thankYouSection.style.display = 'none';
+            if (teamSection) teamSection.style.display = 'none';
+            
+            // Remove team page class from body
+            document.body.classList.remove('team-page');
+            
+            // Show all other sections
+            document.querySelectorAll('main > section').forEach(section => {
+                if (section.id !== 'investment' && section.id !== 'thank-you' && section.id !== 'team') {
+                    section.style.display = 'block';
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // Logo navigation
         const logoLink = document.getElementById('logo-link');
         if (logoLink) {
@@ -3659,45 +3345,7 @@
             });
         });
         
-        teamButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                showTeamPage();
-            });
-        });
-        
         returnHomeButton.addEventListener('click', returnToHome);
-        returnHomeTeamButton.addEventListener('click', returnToHome);
-        
-        // Toggle credentials function
-        function toggleCredentials(member) {
-            const credentials = document.getElementById(member + '-credentials');
-            const arrow = document.getElementById(member + '-arrow');
-            
-            if (credentials.classList.contains('expanded')) {
-                credentials.classList.remove('expanded');
-                arrow.classList.remove('expanded');
-                credentials.style.display = 'none';
-            } else {
-                credentials.style.display = 'block';
-                
-                // Reset animations by removing and re-adding animation classes
-                const animatedElements = credentials.querySelectorAll('.education, .experience, .social-links, .contact-details');
-                animatedElements.forEach(el => {
-                    el.style.animation = 'none';
-                    el.offsetHeight; // Trigger reflow
-                    el.style.animation = null;
-                });
-                
-                setTimeout(() => {
-                    credentials.classList.add('expanded');
-                    arrow.classList.add('expanded');
-                }, 10);
-            }
-        }
-        
-        // Make toggleCredentials globally available
-        window.toggleCredentials = toggleCredentials;
         
         investmentForm.addEventListener('submit', async (e) => {
             e.preventDefault();
