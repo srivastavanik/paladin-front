@@ -416,11 +416,12 @@
             position: absolute;
             inset: 0;
             background: linear-gradient(to right, 
-                rgba(0, 0, 0, 0.3) 0%, 
-                rgba(0, 0, 0, 0.1) 30%, 
-                rgba(0, 0, 0, 0.0) 50%,
-                rgba(255, 255, 255, 0.2) 70%,
-                rgba(255, 255, 255, 0.4) 100%);
+                rgba(0, 0, 0, 0.5) 0%, 
+                rgba(0, 0, 0, 0.4) 20%, 
+                rgba(0, 0, 0, 0.3) 40%,
+                rgba(0, 0, 0, 0.2) 60%,
+                rgba(0, 0, 0, 0.1) 80%,
+                rgba(0, 0, 0, 0.0) 100%);
             z-index: 1;
         }
         
@@ -482,12 +483,14 @@
         
         .hero-line-1 {
             font-size: clamp(2.5rem, 5vw, 4rem);
-            color: var(--color-gray-200);
+            color: transparent;
+            -webkit-text-stroke: 2px var(--color-white);
         }
         
         .hero-line-2 {
             font-size: clamp(3.5rem, 7vw, 5.5rem);
-            color: var(--color-gray-100);
+            color: transparent;
+            -webkit-text-stroke: 2px var(--color-white);
         }
         
         .hero-line-3 {
@@ -2033,7 +2036,7 @@
         }
         
         .team-header {
-            padding: var(--space-48) 0;
+            padding: calc(var(--space-48) + 80px) 0 var(--space-48) 0;
             background-color: var(--color-gray-100);
             text-align: center;
             border-bottom: 1px solid var(--color-gray-200);
@@ -2674,9 +2677,9 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <div class="hero-line hero-line-1">Maximal context.</div>
+                        <div class="hero-line hero-line-1">Maximal context for</div>
                         <div class="hero-line hero-line-2">CySec & Penetration testing.</div>
-                        <div class="hero-line hero-line-3">Ship agentic reproducibility.</div>
+                        <div class="hero-line hero-line-3">Ship with agentic reproducibility.</div>
                     </div>
                     <p class="hero-subhead">
                         Repo-resident agents perform full-stack penetration tests, trace every action, 
