@@ -2061,10 +2061,6 @@
         }
         
         .member-header {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             margin-bottom: var(--space-24);
             padding-bottom: var(--space-12);
             border-bottom: 2px solid currentColor;
@@ -2077,15 +2073,6 @@
             margin: 0;
         }
         
-        .expand-arrow {
-            font-size: 1.5rem;
-            transition: transform var(--transition-fast);
-        }
-        
-        .member-header.expanded .expand-arrow {
-            transform: rotate(180deg);
-        }
-        
         .member-title {
             font-size: 1.25rem;
             font-weight: 500;
@@ -2094,14 +2081,7 @@
         }
         
         .credentials {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
             margin-bottom: var(--space-32);
-        }
-        
-        .credentials.expanded {
-            max-height: 200px;
         }
         
         .credential-item {
@@ -2403,6 +2383,7 @@
                     <div class="hero-actions">
                         <a href="#investment" class="btn btn-investment"><span>Looking to Invest?</span></a>
                         <button onclick="showTeamPage()" class="btn btn-secondary">Meet the Team</button>
+                        <a href="#docs" class="btn btn-text">Private Alpha</a>
                     </div>
                 </div>
             </div>
@@ -2833,7 +2814,7 @@
             <div class="container">
                 <h2>Build with us</h2>
                 <p class="body-large">
-                    Join our design partner program and shape the future of autonomous security testing.
+                    Get in touch for investment or careers purposes.
                 </p>
                 <div class="hero-actions" style="justify-content: center;">
                     <a href="#investment" class="btn btn-investment">Contact us</a>
@@ -2929,13 +2910,12 @@
                 <!-- Nick's Info (Top Right) -->
                 <div class="team-member nick info-section">
                     <div class="member-info">
-                        <div class="member-header" onclick="toggleCredentials('nick')">
+                        <div class="member-header">
                             <h2>Nick S.</h2>
-                            <span class="expand-arrow">↓</span>
                         </div>
                         <p class="member-title">Co-Founder & CEO</p>
                         
-                        <div class="credentials" id="nick-credentials">
+                        <div class="credentials expanded" id="nick-credentials">
                             <div class="credential-item">
                                 <strong>Education:</strong>
                                 <span class="typing-text">University of California, Berkeley | CS, DS, Economics</span>
@@ -2965,13 +2945,12 @@
                 <!-- Jackson's Info (Bottom Left) -->
                 <div class="team-member jackson info-section">
                     <div class="member-info">
-                        <div class="member-header" onclick="toggleCredentials('jackson')">
+                        <div class="member-header">
                             <h2>Jackson B.</h2>
-                            <span class="expand-arrow">↓</span>
                         </div>
                         <p class="member-title">Co-Founder & CTO</p>
                         
-                        <div class="credentials" id="jackson-credentials">
+                        <div class="credentials expanded" id="jackson-credentials">
                             <div class="credential-item">
                                 <strong>Education:</strong>
                                 <span class="typing-text">Georgia Tech | Computer Science</span>
@@ -3015,13 +2994,6 @@
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="container">
-            <div class="footer-actions">
-                <div class="footer-buttons">
-                    <a href="#investment" class="btn btn-investment">Contact us</a>
-                    <button onclick="showTeamPage()" class="btn btn-secondary">Meet the Team</button>
-                </div>
-            </div>
-            
             <div class="footer-bottom">
                 <p>&copy; 2025 Paladin. Autonomous full-stack security testing.</p>
             </div>
@@ -3260,47 +3232,61 @@
             
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Trigger animations automatically
+            setTimeout(() => {
+                startTeamPageAnimations();
+            }, 300);
         }
         
-        function toggleCredentials(member) {
-            const credentials = document.getElementById(`${member}-credentials`);
-            const header = credentials.previousElementSibling.previousElementSibling;
-            const arrow = header.querySelector('.expand-arrow');
+        function startTeamPageAnimations() {
+            // Animate Nick's credentials
+            const nickCredentials = document.getElementById('nick-credentials');
+            const nickTypingTexts = nickCredentials.querySelectorAll('.typing-text');
+            nickTypingTexts.forEach((text, index) => {
+                const originalText = text.textContent;
+                text.textContent = '';
+                
+                setTimeout(() => {
+                    let i = 0;
+                    const typeInterval = setInterval(() => {
+                        if (i < originalText.length) {
+                            text.textContent += originalText.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typeInterval);
+                        }
+                    }, 20);
+                }, index * 200);
+            });
             
-            if (credentials.classList.contains('expanded')) {
-                credentials.classList.remove('expanded');
-                header.classList.remove('expanded');
-            } else {
-                credentials.classList.add('expanded');
-                header.classList.add('expanded');
+            // Animate Jackson's credentials
+            const jacksonCredentials = document.getElementById('jackson-credentials');
+            const jacksonTypingTexts = jacksonCredentials.querySelectorAll('.typing-text');
+            jacksonTypingTexts.forEach((text, index) => {
+                const originalText = text.textContent;
+                text.textContent = '';
                 
-                // Typing animation for credentials
-                const typingTexts = credentials.querySelectorAll('.typing-text');
-                typingTexts.forEach((text, index) => {
-                    const originalText = text.textContent;
-                    text.textContent = '';
-                    
-                    setTimeout(() => {
-                        let i = 0;
-                        const typeInterval = setInterval(() => {
-                            if (i < originalText.length) {
-                                text.textContent += originalText.charAt(i);
-                                i++;
-                            } else {
-                                clearInterval(typeInterval);
-                            }
-                        }, 20);
-                    }, index * 200);
-                });
-                
-                // Pop-in animation for social buttons
-                const socialLinks = credentials.parentElement.querySelector('.social-links');
-                if (socialLinks) {
-                    setTimeout(() => {
-                        socialLinks.style.animation = 'popIn 0.3s ease-out forwards';
-                    }, 500);
-                }
-            }
+                setTimeout(() => {
+                    let i = 0;
+                    const typeInterval = setInterval(() => {
+                        if (i < originalText.length) {
+                            text.textContent += originalText.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typeInterval);
+                        }
+                    }, 20);
+                }, index * 200 + 1000); // Start Jackson's animation 1 second after Nick's
+            });
+            
+            // Pop-in animation for social buttons
+            const allSocialLinks = document.querySelectorAll('.team-section .social-links');
+            allSocialLinks.forEach((socialLinks, index) => {
+                setTimeout(() => {
+                    socialLinks.style.animation = 'popIn 0.3s ease-out forwards';
+                }, 1500 + (index * 500));
+            });
         }
         
         // Update returnToHome function to handle team page
