@@ -2635,6 +2635,35 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* Cipher Animation Styles */
+        .cipher-word {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .cipher-letter {
+            display: inline-block;
+            position: relative;
+            transition: all 0.3s ease-out;
+        }
+        
+        .cipher-letter.settled {
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+            animation: glow-pulse 2s ease-out;
+        }
+        
+        @keyframes glow-pulse {
+            0% {
+                text-shadow: 0 0 5px currentColor;
+            }
+            50% {
+                text-shadow: 0 0 15px currentColor, 0 0 25px currentColor, 0 0 35px currentColor;
+            }
+            100% {
+                text-shadow: 0 0 8px currentColor, 0 0 12px currentColor;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2674,7 +2703,7 @@
                     <div class="hero-text">
                         <div class="hero-line hero-line-1">Maximal context.</div>
                         <div class="hero-line hero-line-2">CySec & Penetration testing.</div>
-                        <div class="hero-line hero-line-3">Ship agentic reproducibility.</div>
+                        <div class="hero-line hero-line-3">Ship agentic <span id="cipher-word" class="cipher-word">reproducibility</span>.</div>
                     </div>
                     <p class="hero-subhead">
                         Repo-resident agents perform full-stack penetration tests, trace every action, 
@@ -3326,6 +3355,69 @@
             el.classList.add('fade-in');
             observer.observe(el);
         });
+        
+        // Cipher Animation for "reproducibility"
+        function initCipherAnimation() {
+            const cipherWord = document.getElementById('cipher-word');
+            if (!cipherWord) return;
+            
+            const originalText = cipherWord.textContent;
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+            
+            // Split into individual letter spans
+            cipherWord.innerHTML = originalText.split('').map((letter, index) => 
+                `<span class="cipher-letter" data-original="${letter}" data-index="${index}">${letter}</span>`
+            ).join('');
+            
+            const letters = cipherWord.querySelectorAll('.cipher-letter');
+            let hasAnimated = false;
+            
+            function startCipherAnimation() {
+                if (hasAnimated) return;
+                hasAnimated = true;
+                
+                // Start randomizing all letters
+                letters.forEach(letter => {
+                    if (letter.dataset.original === ' ') return;
+                    
+                    let randomizeInterval = setInterval(() => {
+                        if (!letter.classList.contains('settled')) {
+                            const randomChar = characters[Math.floor(Math.random() * characters.length)];
+                            letter.textContent = randomChar;
+                        }
+                    }, 50);
+                    
+                    // Store interval for cleanup
+                    letter.randomizeInterval = randomizeInterval;
+                });
+                
+                // Settle letters one by one from left to right
+                letters.forEach((letter, index) => {
+                    if (letter.dataset.original === ' ') return;
+                    
+                    setTimeout(() => {
+                        // Stop randomizing
+                        clearInterval(letter.randomizeInterval);
+                        
+                        // Set to original letter
+                        letter.textContent = letter.dataset.original;
+                        letter.classList.add('settled');
+                        
+                        // Remove glow after animation
+                        setTimeout(() => {
+                            letter.style.textShadow = '0 0 8px currentColor, 0 0 12px currentColor';
+                        }, 2000);
+                        
+                    }, 500 + (index * 100)); // 100ms delay between each letter
+                });
+            }
+            
+            // Start animation after a short delay when page loads
+            setTimeout(startCipherAnimation, 1000);
+        }
+        
+        // Initialize cipher animation when DOM is loaded
+        initCipherAnimation();
         
         // Grid cursor interaction
         const heroGrid = document.querySelector('.hero-grid');
