@@ -2645,23 +2645,33 @@
         .cipher-letter {
             display: inline-block;
             position: relative;
-            transition: all 0.3s ease-out;
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .cipher-letter.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
         
         .cipher-letter.settled {
-            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
-            animation: glow-pulse 2s ease-out;
+            text-shadow: 0 0 8px currentColor, 0 0 15px currentColor;
+            animation: settle-glow 1s ease-out;
         }
         
-        @keyframes glow-pulse {
+        @keyframes settle-glow {
             0% {
                 text-shadow: 0 0 5px currentColor;
+                transform: scale(1.2);
             }
             50% {
-                text-shadow: 0 0 15px currentColor, 0 0 25px currentColor, 0 0 35px currentColor;
+                text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+                transform: scale(1.1);
             }
             100% {
-                text-shadow: 0 0 8px currentColor, 0 0 12px currentColor;
+                text-shadow: 0 0 8px currentColor, 0 0 15px currentColor;
+                transform: scale(1);
             }
         }
     </style>
@@ -3362,58 +3372,55 @@
             if (!cipherWord) return;
             
             const originalText = cipherWord.textContent;
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*';
+            let hasAnimated = false;
             
             // Split into individual letter spans
             cipherWord.innerHTML = originalText.split('').map((letter, index) => 
-                `<span class="cipher-letter" data-original="${letter}" data-index="${index}">${letter}</span>`
+                `<span class="cipher-letter" data-original="${letter}" data-index="${index}"></span>`
             ).join('');
             
             const letters = cipherWord.querySelectorAll('.cipher-letter');
-            let hasAnimated = false;
             
             function startCipherAnimation() {
                 if (hasAnimated) return;
                 hasAnimated = true;
                 
-                // Start randomizing all letters
-                letters.forEach(letter => {
-                    if (letter.dataset.original === ' ') return;
-                    
-                    let randomizeInterval = setInterval(() => {
-                        if (!letter.classList.contains('settled')) {
-                            const randomChar = characters[Math.floor(Math.random() * characters.length)];
-                            letter.textContent = randomChar;
-                        }
-                    }, 50);
-                    
-                    // Store interval for cleanup
-                    letter.randomizeInterval = randomizeInterval;
-                });
-                
-                // Settle letters one by one from left to right
                 letters.forEach((letter, index) => {
-                    if (letter.dataset.original === ' ') return;
+                    const originalChar = letter.dataset.original;
                     
+                    // Skip spaces
+                    if (originalChar === ' ') {
+                        letter.textContent = ' ';
+                        letter.classList.add('visible');
+                        return;
+                    }
+                    
+                    // Pop up each letter with delay
                     setTimeout(() => {
-                        // Stop randomizing
-                        clearInterval(letter.randomizeInterval);
+                        letter.classList.add('visible');
                         
-                        // Set to original letter
-                        letter.textContent = letter.dataset.original;
-                        letter.classList.add('settled');
+                        // Start randomizing this letter
+                        let randomizeInterval = setInterval(() => {
+                            if (!letter.classList.contains('settled')) {
+                                const randomChar = characters[Math.floor(Math.random() * characters.length)];
+                                letter.textContent = randomChar;
+                            }
+                        }, 80);
                         
-                        // Remove glow after animation
+                        // Settle this letter after randomizing for a while
                         setTimeout(() => {
-                            letter.style.textShadow = '0 0 8px currentColor, 0 0 12px currentColor';
-                        }, 2000);
+                            clearInterval(randomizeInterval);
+                            letter.textContent = originalChar;
+                            letter.classList.add('settled');
+                        }, 1000 + (Math.random() * 800)); // Random settle time between 1-1.8 seconds
                         
-                    }, 500 + (index * 100)); // 100ms delay between each letter
+                    }, index * 150); // 150ms delay between each letter appearing
                 });
             }
             
             // Start animation after a short delay when page loads
-            setTimeout(startCipherAnimation, 1000);
+            setTimeout(startCipherAnimation, 1200);
         }
         
         // Initialize cipher animation when DOM is loaded
